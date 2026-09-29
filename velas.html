@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>soprei algumas</title>
+<link rel="stylesheet" href="/estilo.css">
+<style>
+  body { background: #1b1714; color: #e9dfcf; }
+  .bolo { display: block; width: 100%; max-width: 620px; margin: 40px auto 0; }
+  .vela { fill: #e9dfcf; }
+  .chama { fill: #f0a93c; filter: drop-shadow(0 0 6px #f0a93c); animation: tremer 1.4s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 100%; }
+  .fumaca { fill: none; stroke: #6b625a; stroke-width: 1.2; opacity: .7; }
+  @keyframes tremer { from { transform: scaleY(1) } to { transform: scaleY(.85) skewX(3deg) } }
+</style>
+</head>
+<body>
+<main class="centro">
+  <p>vinte e três.</p>
+  <svg class="bolo" id="bolo" viewBox="0 0 620 300" aria-label="bolo com vinte e três velas"></svg>
+</main>
+<script>
+  var velas = '10101101000011001000101';
+  var svg = document.getElementById('bolo'), ns = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs) { var e = document.createElementNS(ns, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; }
+  el('rect', { x: 20, y: 200, width: 580, height: 80, rx: 10, fill: '#5a3a2e' });
+  el('rect', { x: 20, y: 200, width: 580, height: 14, rx: 7, fill: '#e9dfcf' });
+  var x = 36;
+  for (var i = 0; i < velas.length; i++) {
+    if (i === 3) x += 18;
+    el('rect', { class: 'vela', x: x, y: 140, width: 8, height: 60, rx: 2 });
+    if (velas[i] === '1') el('path', { class: 'chama', d: 'M' + (x + 4) + ' 116 c7 10 7 17 0 21 c-7 -4 -7 -11 0 -21z' });
+    else el('path', { class: 'fumaca', d: 'M' + (x + 4) + ' 136 c-5 -6 5 -10 0 -16 c-5 -6 5 -10 0 -16' });
+    x += 23;
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>feliz aniversário</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect x='7' y='6' width='2' height='9' fill='%23b0452d'/><path d='M8 1c1.5 2 1.5 3.5 0 4.5C6.5 4.5 6.5 3 8 1z' fill='%23e8a33d'/></svg>">
+<link rel="stylesheet" href="/estilo.css">
+</head>
+<body>
+<!-- nem tudo aparece enquanto você está olhando -->
+<main>
+  <p>Você sabia, príncipe, que no mundo existem milhares de formas de desejar feliz aniversário?</p>
+
+  <p>Mas também existem milhares de crenças de como não desejar?</p>
+
+  <p>A verdade é que eu não sei mais como desejar um feliz aniversário legal, então vou parar de enrolar e dizer que eu queria tanto um presente legal de verdade pra você, porque eu acho que você merece, e muito. Você é minha inspiração, minha paixão, meu coração todo. Queria que seus 23 anos viessem com descobertas de verdade, com vontades inexplicáveis de crescer e sonhar, porque isso é a única coisa que eu quero desejar de verdade pra você, ou pra gente: uma vida de aventuras, sonhos e vontades, loucuras assustadoras e diversão. Afinal, se a vida não for cheia disso... é cheia do quê?</p>
+
+  <p class="nota centro">— rascunho —</p>
+</main>
+<script>
+  (function () {
+    var titulo = document.title;
+    var fora = [
+      'ei.',
+      'ei. volta.',
+      'enquanto você não olha',
+      'enquanto você não olha, eu acendo as /velas'
+    ];
+    var passo = 0, timer = null;
+    document.addEventListener('visibilitychange', function () {
+      clearInterval(timer);
+      if (document.hidden) {
+        passo = 0;
+        document.title = fora[0];
+        timer = setInterval(function () {
+          passo = Math.min(passo + 1, fora.length - 1);
+          document.title = fora[passo];
+        }, 1800);
+      } else {
+        document.title = titulo;
+      }
+    });
+  })();
+</script>
+</body>
+</html>
