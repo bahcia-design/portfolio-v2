@@ -10,9 +10,52 @@
   .falha { white-space: nowrap; }
   .buraco { font: inherit; color: inherit; background: transparent; border: 0; outline: 0; padding: 0; width: 13ch; caret-color: var(--destaque); }
   .quase { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--tinta-suave); margin-left: .5em; }
+
+  main { transition: opacity 1s ease .25s; }
+  body.intro main { opacity: 0; }
+  body.intro { overflow: hidden; }
+
+  #intro { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+           background: radial-gradient(ellipse at 50% 40%, #28424f 0%, #1d3440 55%, #142530 100%);
+           transition: opacity .7s ease; cursor: pointer; perspective: 1100px; overflow: hidden; }
+  #intro.some { opacity: 0; pointer-events: none; }
+  .envelope { --w: min(78vw, 440px); --h: calc(var(--w) * .66);
+              position: relative; width: var(--w); height: var(--h); transform-style: preserve-3d;
+              opacity: 0; transform: translateY(40px) scale(.96); transition: opacity .8s ease, transform .9s ease;
+              filter: drop-shadow(0 18px 28px rgba(0, 0, 0, .45)); }
+  .envelope.entra { opacity: 1; transform: none; }
+  .verso { position: absolute; inset: 0; background: #b89f78; border-radius: 4px; }
+  .papel { position: absolute; left: 7%; right: 7%; top: 14%; bottom: 6%; z-index: 2;
+           transition: transform 1.05s cubic-bezier(.3, .1, .2, 1); }
+  .envelope.sobe .papel { transform: translateY(calc(var(--h) * -.52)); }
+  .folha { position: absolute; inset: 0; background: var(--papel); border-radius: 2px; box-shadow: 0 2px 10px rgba(0, 0, 0, .25); overflow: hidden;
+           transform-origin: 50% 50%; }
+  .linhas { position: absolute; inset: 14% 12% auto 12%; height: 60%; opacity: .45; transition: opacity 1.4s ease;
+            background: repeating-linear-gradient(to bottom, #b6a48c 0 2px, transparent 2px 13px); filter: blur(.4px); }
+  .frente { position: absolute; inset: 0; z-index: 3; border-radius: 4px;
+            background: linear-gradient(175deg, #e3cfab, #d2ba92);
+            clip-path: polygon(0 100%, 0 0, 50% 64%, 100% 0, 100% 100%); }
+  .aba { position: absolute; left: 0; top: 0; width: 100%; height: 64%; z-index: 4; transform-origin: 50% 0;
+         transform: rotateX(0deg); transition: transform .95s cubic-bezier(.4, 0, .2, 1); transform-style: preserve-3d; }
+  .aba i { position: absolute; inset: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); background: linear-gradient(#d9c39c, #c9b189); }
+  .aba b { position: absolute; left: 50%; top: 100%; width: 16%; aspect-ratio: 1; margin: -11% 0 0 -8%; border-radius: 50%;
+           background: radial-gradient(circle at 35% 30%, #d4623f, #9d3a24 70%); box-shadow: 0 2px 4px rgba(0, 0, 0, .35); backface-visibility: hidden; }
+  .envelope.abre .aba { transform: rotateX(-180deg); }
+  .envelope.aberta .aba { z-index: 1; }
+  .envelope.aberta .aba i { background: linear-gradient(#b89f78, #a98f68); }
+
+  .g-ok { }
 </style>
 </head>
-<body>
+<body class="intro">
+<div id="intro" aria-hidden="true">
+  <div class="envelope" id="envelope">
+    <div class="verso"></div>
+    <div class="papel" id="papel"><div class="folha" id="folha"><div class="linhas" id="linhas"></div></div></div>
+    <div class="frente"></div>
+    <div class="aba"><i></i><b></b></div>
+  </div>
+</div>
 <main>
   <p>Oi, momo. Feliz aniversário.</p>
 
@@ -26,6 +69,48 @@
 (function () {
   var rnd = Math.random;
   function pick(a) { return a[Math.floor(rnd() * a.length)]; }
+
+  var liberado = false, fila = [];
+  function aoLiberar(fn) { if (liberado) fn(); else fila.push(fn); }
+  function liberar() { liberado = true; fila.forEach(function (f) { f(); }); fila = []; }
+
+  (function abertura() {
+    var intro = document.getElementById('intro'), env = document.getElementById('envelope'),
+        papel = document.getElementById('papel'), folha = document.getElementById('folha'), linhas = document.getElementById('linhas');
+    var acabou = false, timers = [];
+    function depois(ms, fn) { timers.push(setTimeout(fn, ms)); }
+    function fim(rapido) {
+      if (acabou) return; acabou = true;
+      timers.forEach(clearTimeout);
+      document.body.classList.remove('intro');
+      intro.classList.add('some');
+      setTimeout(function () { if (intro.parentNode) intro.parentNode.removeChild(intro); }, rapido ? 100 : 800);
+      setTimeout(liberar, rapido ? 100 : 900);
+    }
+    if (/[?&]pular/.test(location.search)) { fim(true); return; }
+    intro.addEventListener('click', function () { fim(false); });
+
+    var etapas = [];
+    function etapa(ms, fn) { etapas.push([ms, fn]); }
+    etapa(150, function () { env.classList.add("entra"); });
+    etapa(1100, function () { env.classList.add("abre"); });
+    etapa(1600, function () { env.classList.add("aberta"); });
+    etapa(2200, function () { env.classList.add("sobe"); });
+    etapa(3450, function () {
+      var r = folha.getBoundingClientRect();
+      var dx = innerWidth / 2 - (r.left + r.width / 2), dy = innerHeight / 2 - (r.top + r.height / 2);
+      var s = Math.max(innerWidth / r.width, innerHeight / r.height) * 1.04;
+      papel.style.zIndex = 10;
+      folha.style.transition = 'transform 1.5s cubic-bezier(.65, 0, .25, 1), box-shadow 1.5s';
+      folha.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')';
+      folha.style.boxShadow = 'none';
+      linhas.style.opacity = 0;
+    });
+    etapa(5100, function () { fim(false); });
+    if (/[?&]manual/.test(location.search)) { window.__etapas = etapas.map(function (e) { return e[1]; }); return; }
+    etapas.forEach(function (e) { depois(e[0], e[1]); });
+  })();
+
   var MOJI = { 'é': 'Ã©', 'ã': 'Ã£', 'ç': 'Ã§', 'ê': 'Ãª', 'á': 'Ã¡', 'í': 'Ã­', 'ó': 'Ã³', 'ú': 'Ãº', 'â': 'Ã¢', 'õ': 'Ãµ' };
   function corrompe(t, p) {
     var s = '';
@@ -74,12 +159,14 @@
 
   Array.prototype.forEach.call(document.querySelectorAll('.g'), function (el) {
     var orig = el.textContent;
-    (function agenda() {
-      setTimeout(function () {
-        if (document.hidden) { agenda(); return; }
-        if (rnd() < .3) sumir(el, orig, agenda); else rajada(el, orig, false, agenda);
-      }, 4000 + rnd() * 11000);
-    })();
+    aoLiberar(function () {
+      (function agenda() {
+        setTimeout(function () {
+          if (document.hidden) { agenda(); return; }
+          if (rnd() < .3) sumir(el, orig, agenda); else rajada(el, orig, false, agenda);
+        }, 4000 + rnd() * 11000);
+      })();
+    });
   });
 
   var cauda = document.getElementById('cauda'), buraco = document.getElementById('buraco'), quase = document.getElementById('quase');
@@ -113,11 +200,12 @@
       roteiro([[pick(['fosse atÃ©', 'fosse a▒', 'fo', 'fosse até a l']), 70 + rnd() * 70, .5, '', true], ['', 0]], fantasma);
     }, 8000 + rnd() * 12000);
   }
+  function dispara() { aoLiberar(function () { setTimeout(sequencia, 1800 + rnd() * 1800); }); }
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es, io) {
-      if (!feito && es[0].isIntersecting) { feito = true; io.disconnect(); setTimeout(sequencia, 1800 + rnd() * 1800); }
+      if (!feito && es[0].isIntersecting) { feito = true; io.disconnect(); dispara(); }
     }, { threshold: 1 }).observe(cauda);
-  } else { setTimeout(sequencia, 4000); }
+  } else { dispara(); }
 
   function limpar(v) { return v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, ''); }
   buraco.addEventListener('keydown', function (e) {
