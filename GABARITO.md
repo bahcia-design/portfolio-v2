@@ -1,5 +1,24 @@
 # Gabarito (NÃO vai pro site — está no .vercelignore)
 
+## PLANO ATUAL (o que vale) — atualizado em 30/set/2026
+
+Ritmo: **site (enigma) → descobre o jogo → algo dentro do jogo → resposta no endereço → próxima fase**
+
+### Fase 1 — Chicory (demo grátis) ✅ no ar
+1. `/` — a carta. No fim, a frase clicável "esqueci qual era o jogo, mas acho que ele tinha que ser colorido…" → leva pra `/salada`.
+2. `/salada` — só a foto de chicória. No código da página (Ctrl+U): `o velho Basil pode ter uma dica`.
+3. Chicória + colorido + Basil → o jogo é **Chicory** → ele digita `/chicory`.
+4. `/chicory` — só a imagem `flowerbud.jpg` (botão de flor fechado).
+5. No jogo, o Basil diz: "Some flowers bloom when in color. But others bloom only when blank."
+6. Ele troca o nome da imagem no endereço: `/color.jpg` = flor colorida, sem texto (ARMADILHA). `/blank.jpg` = flor sem cor → leva pra fase 2.
+- 🟡 As três imagens de flor são provisórias (desenho simples). Trocar pelas artes/fotos dela, com os mesmos nomes.
+- 🟡 Falta decidir o que o `blank.jpg` mostra e qual é a fase 2 (ideia: papel em branco com dobras de coelho de origami → To the Moon).
+
+---
+
+# BANCO DE IDEIAS (plano antigo — nada abaixo está valendo; as páginas antigas ainda existem no site: /anya, /sopre, /mare, /portfolio, /ancora, /momo)
+
+
 Legenda: ✅ pronta · 🟡 falta material dela · ⬜ a construir
 
 Ritmo de cada bloco: **desafio(s) → descobrir o jogo → algo dentro do jogo → próxima fase**.
