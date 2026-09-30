@@ -6,11 +6,15 @@
 <title>feliz aniversário</title>
 <link rel="stylesheet" href="/estilo.css">
 <style>
-  .falha { position: relative; display: inline; }
-  .ruido { font-family: 'IBM Plex Mono', monospace; font-size: .8em; color: var(--tinta-suave);
-           text-shadow: 1px 0 rgba(176, 69, 45, .6), -1px 0 rgba(29, 52, 64, .6); transition: opacity 1.2s; }
-  .buraco { font: inherit; color: inherit; background: transparent; border: 0; outline: 0; padding: 0;
-            width: 9ch; caret-color: var(--destaque); }
+  .g { position: relative; }
+  .falha { white-space: nowrap; }
+  .buraco { font: inherit; color: inherit; background: transparent; border: 0; outline: 0; padding: 0 2px;
+            width: 13ch; border-bottom: 1px dashed rgba(122, 106, 95, .5); caret-color: var(--destaque); }
+  .buraco:focus { border-bottom-color: rgba(176, 69, 45, .5); }
+  .cursor { display: inline-block; width: 2px; height: 1em; background: var(--tinta-suave); vertical-align: text-bottom;
+            margin-right: -2px; animation: pisca 1.1s steps(1) infinite; }
+  .falha:focus-within .cursor { display: none; }
+  @keyframes pisca { 50% { opacity: 0 } }
   .quase { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--tinta-suave); margin-left: .5em; }
 </style>
 </head>
@@ -18,25 +22,108 @@
 <main>
   <p>Oi, momo. Feliz aniversário.</p>
 
-  <p>Você sabia que no mundo existem milhares de crenças de aniversário?</p>
+  <p>Você sabia que no mundo existem milhares de <span class="g">crenças de aniversário</span>?</p>
 
-  <p>E eu acho que, na verdade, nenhuma delas chega aos pés do que eu queria trazer pra você nesse aniversário. Eu não sei mais como desejar um feliz aniversário legal. Queria conseguir te trazer sorte, desejar que você alcançasse todos os seus sonhos, ou que você nunca tivesse dúvidas do tamanho do meu amor por você. Eu te amo tanto que nada seria capaz de mensurar o tamanho do meu amor, nem se eu <span class="falha"><span class="ruido" id="ruido"></span><input class="buraco" id="buraco" autocomplete="off" spellcheck="false" aria-label=""><span class="quase" id="quase"></span></span></p>
+  <p>E eu acho que, na verdade, <span class="g">nenhuma delas chega aos pés</span> do que eu queria trazer pra você nesse aniversário. <span class="g">Eu não sei mais como desejar um feliz aniversário legal.</span> Queria conseguir te trazer sorte, <span class="g">desejar que você alcançasse todos os seus sonhos</span>, ou que você <span class="g">nunca tivesse dúvidas do tamanho do meu amor</span> por você. Eu te amo tanto que nada seria capaz de mensurar o tamanho do meu amor, nem se eu <span class="falha"><span id="cauda">fosse até a lua</span> <span class="cursor"></span><input class="buraco" id="buraco" autocomplete="off" spellcheck="false" aria-label=""></span><span class="quase" id="quase"></span></p>
 
   <p>Aliás, por acaso eu já te contei de onde veio o principal costume dos aniversários?</p>
 </main>
 <script>
 (function () {
-  var ruido = document.getElementById('ruido'), buraco = document.getElementById('buraco'), quase = document.getElementById('quase');
-  var sujo = '▓▒░█▌▐╳#%&*/\\|¦', texto = 'fosse até a l', passo = 0;
-  var t = setInterval(function () {
-    passo++;
+  var rnd = Math.random;
+  function pick(a) { return a[Math.floor(rnd() * a.length)]; }
+  var MOJI = { 'é': 'Ã©', 'ã': 'Ã£', 'ç': 'Ã§', 'ê': 'Ãª', 'á': 'Ã¡', 'í': 'Ã­', 'ó': 'Ã³', 'ú': 'Ãº', 'â': 'Ã¢', 'õ': 'Ãµ' };
+  function corrompe(t, p) {
     var s = '';
-    for (var i = 0; i < texto.length; i++) {
-      s += (Math.random() < passo / 30) ? (Math.random() < .5 ? '' : sujo[Math.floor(Math.random() * sujo.length)]) : texto[i];
+    for (var i = 0; i < t.length; i++) {
+      var c = t[i];
+      if (MOJI[c] && rnd() < .8) s += MOJI[c];
+      else if (c !== ' ' && rnd() < p) s += pick(['�', '▒', '░', 'Ã', '¤', '¦']);
+      else s += c;
     }
-    ruido.textContent = s;
-    if (passo > 45) { clearInterval(t); ruido.style.opacity = 0; setTimeout(function () { ruido.textContent = ''; }, 1300); }
-  }, 90);
+    return s;
+  }
+
+  function quadro(el, orig, forte) {
+    el.style.opacity = forte ? (.1 + rnd() * .5) : (.4 + rnd() * .5);
+    el.style.left = ((rnd() - .5) * (forte ? 7 : 3)).toFixed(1) + 'px';
+    el.style.textShadow = rnd() < .6
+      ? ((rnd() - .5) * 3).toFixed(1) + 'px 0 rgba(176,69,45,.55), ' + ((rnd() - .5) * -3).toFixed(1) + 'px 0 rgba(29,52,64,.55)'
+      : 'none';
+    el.textContent = rnd() < (forte ? .6 : .3) ? corrompe(orig, .08) : orig;
+  }
+  function limpa(el, orig) {
+    el.style.opacity = ''; el.style.left = ''; el.style.textShadow = ''; el.textContent = orig;
+  }
+  function rajada(el, orig, forte, fim) {
+    var n = 2 + Math.floor(rnd() * (forte ? 5 : 3)), i = 0;
+    (function passo() {
+      if (i++ >= n) { limpa(el, orig); if (fim) fim(); return; }
+      quadro(el, orig, forte);
+      setTimeout(function () {
+        if (rnd() < .5) limpa(el, orig);
+        setTimeout(passo, 30 + rnd() * 140);
+      }, 40 + rnd() * 110);
+    })();
+  }
+  function sumir(el, orig, fim) {
+    rajada(el, orig, true, function () {
+      el.style.transition = 'opacity ' + (.25 + rnd() * .4).toFixed(2) + 's';
+      el.style.opacity = 0;
+      setTimeout(function () {
+        el.style.transition = 'opacity ' + (.8 + rnd() * .8).toFixed(2) + 's';
+        el.style.opacity = '';
+        setTimeout(function () { el.style.transition = ''; if (fim) fim(); }, 1700);
+      }, 900 + rnd() * 2200);
+    });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.g'), function (el) {
+    var orig = el.textContent;
+    (function agenda() {
+      setTimeout(function () {
+        if (document.hidden) { agenda(); return; }
+        if (rnd() < .3) sumir(el, orig, agenda); else rajada(el, orig, false, agenda);
+      }, 4000 + rnd() * 11000);
+    })();
+  });
+
+  var cauda = document.getElementById('cauda'), buraco = document.getElementById('buraco'), quase = document.getElementById('quase');
+  var origC = 'fosse até a lua', feito = false;
+  function roteiro(passos, fim) {
+    var i = 0;
+    (function prox() {
+      if (i >= passos.length) { if (fim) fim(); return; }
+      var p = passos[i++];
+      cauda.textContent = p[0];
+      cauda.style.opacity = p[2] === undefined ? '' : p[2];
+      cauda.style.left = p[3] || '';
+      cauda.style.textShadow = p[4] ? '1.5px 0 rgba(176,69,45,.6), -1.5px 0 rgba(29,52,64,.6)' : 'none';
+      setTimeout(prox, p[1] * (.75 + rnd() * .6));
+    })();
+  }
+  function sequencia() {
+    roteiro([
+      ['fosse atÃ© a lua', 150, .7, '2px', true],
+      [origC, 380],
+      [origC + ' fosse até a', 110, .8, '-3px', true],
+      ['fosse até a l', 690, .75],
+      ['fosse até a l▒', 90, .5, '1px', true],
+      ['fosse a', 70, .4, '-2px', true],
+      ['', 0]
+    ], fantasma);
+  }
+  function fantasma() {
+    setTimeout(function () {
+      if (document.hidden || document.activeElement === buraco || buraco.value) { fantasma(); return; }
+      roteiro([[pick(['fosse atÃ©', 'fosse a▒', 'fo', 'fosse até a l']), 70 + rnd() * 70, .5, '', true], ['', 0]], fantasma);
+    }, 8000 + rnd() * 12000);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es, io) {
+      if (!feito && es[0].isIntersecting) { feito = true; io.disconnect(); setTimeout(sequencia, 1800 + rnd() * 1800); }
+    }, { threshold: 1 }).observe(cauda);
+  } else { setTimeout(sequencia, 4000); }
 
   function limpar(v) { return v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, ''); }
   buraco.addEventListener('keydown', function (e) {
