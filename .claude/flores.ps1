@@ -1,6 +1,6 @@
 # Gera imagens PROVISÓRIAS da fase do jardim (ela vai trocar pela arte dela)
 Add-Type -AssemblyName System.Drawing
-$pasta = Join-Path (Split-Path $PSScriptRoot -Parent) 'jardim'
+$pasta = Split-Path $PSScriptRoot -Parent
 New-Item -ItemType Directory -Force $pasta | Out-Null
 $jpg = [Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Object { $_.MimeType -eq 'image/jpeg' }
 $par = New-Object Drawing.Imaging.EncoderParameters 1
@@ -15,7 +15,7 @@ function Caule($g, $x) { $g.DrawLine($tinta, $x, 560, $x, 330); $g.DrawBezier($t
 # flower.jpg: três brotinhos fechados
 $b, $g = Nova
 foreach ($x in 250, 400, 550) { Caule $g $x; $g.FillEllipse([Drawing.Brushes]::White, $x - 22, 280, 44, 60); $g.DrawEllipse($tinta, $x - 22, 280, 44, 60) }
-Salvar $b 'flower.jpg'
+Salvar $b 'flowerbud.jpg'
 
 function Flor($g, $colorida) {
   Caule $g 400
@@ -34,8 +34,8 @@ function Palavra($g, $texto) {
   $g.DrawString($texto, $f, (New-Object Drawing.SolidBrush ([Drawing.Color]::FromArgb(30, 30, 36))), (New-Object Drawing.RectangleF 300, 150, 200, 200), $fmt)
 }
 
-# color.jpg: flor colorida com a 1ª metade
-$b, $g = Nova; Flor $g $true; Palavra $g 'FLOR'; Salvar $b 'color.jpg'
-# blank.jpg: flor sem cor com a 2ª metade
-$b, $g = Nova; Flor $g $false; Palavra $g 'ESCER'; Salvar $b 'blank.jpg'
+# color.jpg: flor colorida (armadilha, sem texto)
+$b, $g = Nova; Flor $g $true; Salvar $b 'color.jpg'
+# blank.jpg: flor sem cor (leva pra fase 2)
+$b, $g = Nova; Flor $g $false; Salvar $b 'blank.jpg'
 Write-Host 'ok'
