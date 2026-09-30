@@ -3,83 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>seu presente</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect x='2' y='6' width='12' height='9' fill='%23b0452d'/><rect x='1' y='4' width='14' height='3' fill='%23b0452d'/><rect x='7' y='4' width='2' height='11' fill='%23f4ecdd'/></svg>">
+<title>feliz aniversário</title>
 <link rel="stylesheet" href="/estilo.css">
 <style>
-  .presente { text-align: center; padding-top: 12vh; }
-  .presente .rotulo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--tinta-suave); }
-  .presente .jogo { font-size: 2.4em; font-weight: 600; margin: .3em 0 1.2em; }
-  .botao { font: 600 15px 'IBM Plex Mono', monospace; letter-spacing: .12em; text-transform: uppercase; background: var(--tinta); color: var(--papel); border: 0; padding: 16px 40px; cursor: pointer; }
-  .botao:disabled { opacity: .5; cursor: default; }
-  .erro { font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--destaque); min-height: 1.5em; margin-top: 24px; }
-  .carta { display: none; }
-  .carta.aberta { display: block; animation: surgir 2.5s ease; }
-  @keyframes surgir { from { opacity: 0 } to { opacity: 1 } }
+  .pista { display: block; text-align: center; margin-top: 2.4em; font-style: italic; color: var(--tinta-suave); text-decoration: none; }
+  .pista:hover { color: var(--destaque); }
 </style>
 </head>
 <body>
-<!-- nem tudo aparece enquanto você está olhando -->
 <main>
-  <section class="presente" id="presente">
-    <div class="rotulo">um presente pra você</div>
-    <div class="jogo">Ghost of Tsushima</div>
-    <button class="botao" id="resgatar">Resgatar</button>
-    <div class="erro" id="erro"></div>
-  </section>
+  <p>Oi, momo. Feliz aniversário.</p>
 
-  <section class="carta" id="carta">
-    <p>Oi, momo. Feliz aniversário.</p>
+  <p>Você sabia, príncipe, que no mundo existem milhares de formas de desejar feliz aniversário?</p>
 
-    <p>Admito que eu ia fazer graça com o presente, mas meu enigma foi por água abaixo.</p>
+  <p>Mas também existem milhares de crenças de como não desejar?</p>
 
-    <p>Você sabia, príncipe, que no mundo existem milhares de formas de desejar feliz aniversário?</p>
+  <p>A verdade é que eu não sei mais como desejar um feliz aniversário legal, então vou parar de enrolar e dizer que eu queria tanto um presente legal de verdade pra você, porque eu acho que você merece, e muito. Você é minha inspiração, minha paixão, meu coração todo. Queria que seus 23 anos viessem com descobertas de verdade, com vontades inexplicáveis de crescer e sonhar, porque isso é a única coisa que eu quero desejar de verdade pra você, ou pra gente: uma vida de aventuras, sonhos e vontades, loucuras assustadoras e diversão. Afinal, se a vida não for cheia disso... é cheia do quê?</p>
 
-    <p>Mas também existem milhares de crenças de como não desejar?</p>
-
-    <p>A verdade é que eu não sei mais como desejar um feliz aniversário legal, então vou parar de enrolar e dizer que eu queria tanto um presente legal de verdade pra você, porque eu acho que você merece, e muito. Você é minha inspiração, minha paixão, meu coração todo. Queria que seus 23 anos viessem com descobertas de verdade, com vontades inexplicáveis de crescer e sonhar, porque isso é a única coisa que eu quero desejar de verdade pra você, ou pra gente: uma vida de aventuras, sonhos e vontades, loucuras assustadoras e diversão.​‌‌​‌‌​‌​‌‌​‌‌‌‌​‌‌​‌‌​‌​‌‌​‌‌‌‌ Afinal, se a vida não for cheia disso... é cheia do quê?</p>
-
-    <p class="nota centro">— rascunho —</p>
-  </section>
+  <a class="pista" href="/salada">esqueci qual era o jogo, mas acho que ele tinha que ser colorido…</a>
 </main>
-<script>
-(function () {
-  var botao = document.getElementById('resgatar'), erro = document.getElementById('erro');
-  botao.addEventListener('click', function () {
-    botao.disabled = true;
-    erro.textContent = 'resgatando...';
-    setTimeout(function () { erro.textContent = 'erro: este presente não existe.'; }, 2200);
-    setTimeout(function () {
-      document.getElementById('presente').style.display = 'none';
-      document.getElementById('carta').className = 'carta aberta';
-      document.title = 'feliz aniversário';
-    }, 5200);
-  });
-
-  var fora = [
-    'ei.',
-    'ei. volta.',
-    'o presente não era esse.',
-    '206440',
-    '206440',
-    'ela tem nome de gente e mora sozinha na beira do penhasco'
-  ];
-  var passo = 0, timer = null, titulo = document.title;
-  document.addEventListener('visibilitychange', function () {
-    clearInterval(timer);
-    if (document.hidden) {
-      titulo = document.title;
-      passo = 0;
-      document.title = fora[0];
-      timer = setInterval(function () {
-        passo = Math.min(passo + 1, fora.length - 1);
-        document.title = fora[passo];
-      }, 2200);
-    } else {
-      document.title = titulo;
-    }
-  });
-})();
-</script>
 </body>
 </html>
