@@ -61,7 +61,7 @@
         if (forte > 8 && apagadas < chamas.length) { chamas[apagadas++].style.opacity = 0; forte = 4; }
         if (apagadas >= chamas.length) {
           clearInterval(relogio); stream.getTracks().forEach(function (t) { t.stop(); });
-          texto.textContent = atob('My44LjEgICAxLjIuMiAgIDEuMy4yICAgMy4yLjI=');
+          texto.textContent = atob('NS44LjEgICAzLjIuMiAgIDMuMy4yICAgNS4yLjI=');
           setTimeout(function () { texto.style.opacity = 1; }, 1200);
           return;
         }
