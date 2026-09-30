@@ -30,19 +30,15 @@
 
   .papel { position: absolute; left: 6%; right: 6%; top: 12%; bottom: 5%; z-index: 2; transition: transform .8s cubic-bezier(.3, .1, .2, 1); }
   .envelope.sobe .papel { transform: translateY(calc(var(--h) * -.58)); }
-  .xadrez { position: absolute; left: -5%; top: 7%; width: 64%; height: 72%; transform: rotate(-8deg); border-radius: 2px; box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
-            background: repeating-linear-gradient(0deg, rgba(255, 255, 255, .5) 0 9px, transparent 9px 18px),
-                        repeating-linear-gradient(90deg, rgba(255, 255, 255, .5) 0 9px, transparent 9px 18px), #b5363c; }
   .folha { position: absolute; inset: 0; background: var(--papel); border-radius: 2px; box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
            overflow: hidden; transform-origin: 50% 50%; }
   .linhas { position: absolute; inset: 0; transition: opacity .7s ease; }
   .pauta { position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, transparent 0 21px, rgba(140, 165, 180, .38) 21px 22px); }
   .margem { position: absolute; left: 14%; top: 0; bottom: 0; width: 1px; background: rgba(214, 110, 110, .55); }
   .furo { position: absolute; left: 4%; width: 3.2%; aspect-ratio: 1; border-radius: 50%; background: #c9b9a0; box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3); }
-  .linhas svg { position: absolute; overflow: visible; }
-  .laco { left: 1%; top: -2%; width: 24%; transform: rotate(-14deg); filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .25)); }
+  .linhas img { position: absolute; display: block; }
   .coracao { right: 4%; top: 5%; width: 15%; transform: rotate(8deg); }
-  .buque { left: 4%; bottom: 30%; width: 19%; transform: rotate(-6deg); filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .3)); }
+  .buque { left: 5%; bottom: 14%; width: 30%; transform: rotate(-6deg); filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .3)); }
 
   .frente { position: absolute; inset: 0; z-index: 3; border-radius: 4px;
             background: var(--kraft), linear-gradient(175deg, #e6c999, #d6b27d);
@@ -53,7 +49,7 @@
            background: var(--kraft), linear-gradient(#e2c592, #d2ae78); }
   .aba b { position: absolute; left: 50%; top: 100%; width: 17%; aspect-ratio: 1; margin: -10.5% 0 0 -8.5%; backface-visibility: hidden;
            filter: drop-shadow(0 2px 2px rgba(60, 30, 10, .35)); transform: rotate(-8deg); }
-  .aba b svg { display: block; width: 100%; height: 100%; }
+  .aba b img { display: block; width: 100%; height: auto; }
   .envelope.abre .aba { transform: rotateX(-180deg); }
   .envelope.aberta .aba { z-index: 1; }
   .envelope.aberta .aba i { background: var(--kraft), linear-gradient(#bf9863, #ae8652); }
@@ -70,31 +66,16 @@
   <div class="envelope" id="envelope">
     <div class="verso"></div>
     <div class="papel" id="papel">
-      <div class="xadrez"></div>
       <div class="folha" id="folha">
         <div class="linhas" id="linhas">
           <div class="pauta"></div><div class="margem"></div>
           <i class="furo" style="top:16%"></i><i class="furo" style="top:46%"></i><i class="furo" style="top:76%"></i>
-          <svg class="laco" viewBox="0 0 80 62"><defs><linearGradient id="fita" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d94a4a"/><stop offset="1" stop-color="#a32929"/></linearGradient></defs>
-            <path d="M40 30C22 4 0 8 5 28c4 13 26 12 35 2z" fill="url(#fita)" stroke="#8a2222" stroke-width="1.2"/>
-            <path d="M40 30C58 4 80 8 75 28c-4 13-26 12-35 2z" fill="url(#fita)" stroke="#8a2222" stroke-width="1.2"/>
-            <path d="M37 34 22 60l13-7 6-14zM43 34l15 26-13-7-6-14z" fill="#b53333" stroke="#8a2222" stroke-width="1.2"/>
-            <rect x="33" y="22" width="14" height="15" rx="5" fill="#c83c3c" stroke="#8a2222" stroke-width="1.2"/></svg>
-          <svg class="coracao" viewBox="0 0 100 92"><defs><radialGradient id="cg" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#e0564f"/><stop offset="1" stop-color="#b02a2c"/></radialGradient></defs>
-            <path d="M50 88C8 58 0 32 14 16 28 2 46 10 50 26 54 10 72 2 86 16c14 16 6 42-36 72z" fill="url(#cg)"/>
-            <path d="M26 24c6-6 14-6 20 2M22 40c8 10 16 18 26 26M60 20c6-4 14-2 18 6M64 42c-4 8-10 14-16 20M38 34c6 6 10 12 14 20" fill="none" stroke="#8f1f24" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/></svg>
-          <svg class="buque" viewBox="0 0 80 100"><path d="M14 10h52l10 34-14 22-16 30H34L26 66 6 44z" fill="#fff" stroke="#fff" stroke-width="8" stroke-linejoin="round"/>
-            <path d="M40 92V50M28 92 24 52M52 92 56 52" stroke="#4d8a45" stroke-width="3" stroke-linecap="round" fill="none"/>
-            <path d="M40 66c-10-2-18-8-20-16 10 0 18 6 20 16zM40 62c10-2 16-8 18-14-10 0-16 4-18 14z" fill="#5c9e52"/>
-            <path d="M14 34c0-12 4-16 6-20 2 4 8 8 8 20-4 4-10 4-14 0zM32 28c0-12 5-18 8-22 3 4 8 10 8 22-5 4-11 4-16 0zM52 34c0-12 6-16 8-20 2 4 6 8 6 20-4 4-10 4-14 0z" fill="#d8434e"/>
-            <path d="M22 80c6 6 30 6 36 0l-4 12c-8 4-20 4-28 0z" fill="#c23b3b"/></svg>
+          <img class="coracao" src="/coracao.png" alt=""><img class="buque" src="/buque.png" alt="">
         </div>
       </div>
     </div>
     <div class="frente"></div>
-    <div class="aba"><i></i><b><svg viewBox="0 0 100 92"><defs><radialGradient id="cg2" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#e0564f"/><stop offset="1" stop-color="#a8262a"/></radialGradient></defs>
-      <path d="M50 88C8 58 0 32 14 16 28 2 46 10 50 26 54 10 72 2 86 16c14 16 6 42-36 72z" fill="url(#cg2)"/>
-      <path d="M26 24c6-6 14-6 20 2M22 40c8 10 16 18 26 26M60 20c6-4 14-2 18 6M64 42c-4 8-10 14-16 20M38 34c6 6 10 12 14 20" fill="none" stroke="#8f1f24" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/></svg></b></div>
+    <div class="aba"><i></i><b><img src="/coracao.png" alt=""></b></div>
     <span class="cora" style="left:14%;--d:.05s;--r:-25deg">♥</span>
     <span class="cora" style="left:30%;--d:.2s;--r:20deg;font-size:16px">♥</span>
     <span class="cora" style="left:52%;--d:.1s;--r:-15deg;font-size:26px">♥</span>
