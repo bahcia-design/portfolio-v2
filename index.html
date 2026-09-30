@@ -8,13 +8,7 @@
 <style>
   .g { position: relative; }
   .falha { white-space: nowrap; }
-  .buraco { font: inherit; color: inherit; background: transparent; border: 0; outline: 0; padding: 0 2px;
-            width: 13ch; border-bottom: 1px dashed rgba(122, 106, 95, .5); caret-color: var(--destaque); }
-  .buraco:focus { border-bottom-color: rgba(176, 69, 45, .5); }
-  .cursor { display: inline-block; width: 2px; height: 1em; background: var(--tinta-suave); vertical-align: text-bottom;
-            margin-right: -2px; animation: pisca 1.1s steps(1) infinite; }
-  .falha:focus-within .cursor { display: none; }
-  @keyframes pisca { 50% { opacity: 0 } }
+  .buraco { font: inherit; color: inherit; background: transparent; border: 0; outline: 0; padding: 0; width: 13ch; caret-color: var(--destaque); }
   .quase { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--tinta-suave); margin-left: .5em; }
 </style>
 </head>
@@ -24,7 +18,7 @@
 
   <p>Você sabia que no mundo existem milhares de <span class="g">crenças de aniversário</span>?</p>
 
-  <p>E eu acho que, na verdade, <span class="g">nenhuma delas chega aos pés</span> do que eu queria trazer pra você nesse aniversário. <span class="g">Eu não sei mais como desejar um feliz aniversário legal.</span> Queria conseguir te trazer sorte, <span class="g">desejar que você alcançasse todos os seus sonhos</span>, ou que você <span class="g">nunca tivesse dúvidas do tamanho do meu amor</span> por você. Eu te amo tanto que nada seria capaz de mensurar o tamanho do meu amor, nem se eu <span class="falha"><span id="cauda">fosse até a lua</span> <span class="cursor"></span><input class="buraco" id="buraco" autocomplete="off" spellcheck="false" aria-label=""></span><span class="quase" id="quase"></span></p>
+  <p>E eu acho que, na verdade, <span class="g">nenhuma delas chega aos pés</span> do que eu queria trazer pra você nesse aniversário. <span class="g">Eu não sei mais como desejar um feliz aniversário legal.</span> Queria conseguir te trazer sorte, <span class="g">desejar que você alcançasse todos os seus sonhos</span>, ou que você <span class="g">nunca tivesse dúvidas do tamanho do meu amor</span> por você. Eu te amo tanto que nada seria capaz de mensurar o tamanho do meu amor, nem se eu <span class="falha"><span id="cauda">fosse até a lua</span> <input class="buraco" id="buraco" autocomplete="off" spellcheck="false" aria-label=""></span><span class="quase" id="quase"></span></p>
 
   <p>Aliás, por acaso eu já te contei de onde veio o principal costume dos aniversários?</p>
 </main>
