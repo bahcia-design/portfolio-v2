@@ -73,3 +73,10 @@ Preços e demos conferidos na Steam em 29/set/2026 (podem mudar).
 - [ ] Presentes: comprar como CHAVE (ex.: Nuuvem) ou "presente" da Steam — NUNCA na conta da família, senão aparece na biblioteca dele
 - [ ] Música 1 — fase 8
 - [ ] 1 pedaço da carta por bloco
+
+## FASE DO JARDIM (ideia dela) — página `/jardim` (nome provisório; o endereço vai ser a resposta da fase anterior)
+- A página mostra `flower.jpg` (brotinhos fechados) e a dica: "quem entende de flor por aqui é o manjericão".
+- Manjericão = **Basil**, personagem do **Chicory** (demo grátis). Ele diz: "Some flowers bloom when in color. But others bloom only when blank."
+- Ele troca o endereço da imagem: `/jardim/flower.jpg` → `/jardim/color.jpg` (flor colorida: **FLOR**) e `/jardim/blank.jpg` (flor sem cor: **ESCER**).
+- Resposta: **/florescer**
+- 🟡 Imagens provisórias — trocar pela arte dela (mesmos nomes de arquivo). Confirmar que o Basil aparece na DEMO.
