@@ -112,7 +112,7 @@
       document.body.classList.remove('intro');
       intro.classList.add('some');
       setTimeout(function () { if (intro.parentNode) intro.parentNode.removeChild(intro); }, rapido ? 100 : 700);
-      setTimeout(liberar, rapido ? 100 : 800);
+      setTimeout(liberar, rapido ? 100 : 450);
     }
     if (/[?&]pular/.test(location.search)) { fim(true); return; }
     intro.addEventListener('click', function () { fim(false); });
@@ -217,7 +217,7 @@
   }
   // os defeitos acompanham a leitura: comecam no topo e descem no ritmo de quem le
   var gs = Array.prototype.slice.call(document.querySelectorAll(".g")), main = document.querySelector("main");
-  var PALAVRAS_POR_S = 4.5;
+  var PALAVRAS_POR_S = 6.5;
   function palavrasAntes(el) { var r = document.createRange(); r.setStart(main, 0); r.setEndBefore(el); return r.toString().trim().split(/\s+/).length; }
   function visivel(el) { var r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight * .9; }
   function quandoVisivel(el, fn) { (function t() { if (document.hidden || !visivel(el)) { setTimeout(t, 400); return; } fn(); })(); }
@@ -239,11 +239,11 @@
     var fim = 0;
     gs.forEach(function (el, i) {
       el._orig = el.textContent;
-      var t = 900 + palavrasAntes(el) / PALAVRAS_POR_S * 1000 * (.9 + rnd() * .2);
+      var t = 500 + palavrasAntes(el) / PALAVRAS_POR_S * 1000 * (.9 + rnd() * .2);
       fim = Math.max(fim, t);
       setTimeout(function () { quandoVisivel(el, function () { roda(el, i === 2); }); }, t);
     });
-    var tc = 900 + palavrasAntes(cauda) / PALAVRAS_POR_S * 1000;
+    var tc = 500 + palavrasAntes(cauda) / PALAVRAS_POR_S * 1000;
     fim = Math.max(fim, tc);
     setTimeout(function () { quandoVisivel(cauda, function () { setTimeout(sequencia, 300 + rnd() * 500); }); }, tc);
     setTimeout(function solto() {
