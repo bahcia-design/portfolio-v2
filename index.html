@@ -6,21 +6,48 @@
 <title>feliz aniversário</title>
 <link rel="stylesheet" href="/estilo.css">
 <style>
-  .pista { display: block; text-align: center; margin-top: 2.4em; font-style: italic; color: var(--tinta-suave); text-decoration: none; }
-  .pista:hover { color: var(--destaque); }
+  .falha { position: relative; display: inline; }
+  .ruido { font-family: 'IBM Plex Mono', monospace; font-size: .8em; color: var(--tinta-suave);
+           text-shadow: 1px 0 rgba(176, 69, 45, .6), -1px 0 rgba(29, 52, 64, .6); transition: opacity 1.2s; }
+  .buraco { font: inherit; color: inherit; background: transparent; border: 0; outline: 0; padding: 0;
+            width: 9ch; caret-color: var(--destaque); }
+  .quase { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--tinta-suave); margin-left: .5em; }
 </style>
 </head>
 <body>
 <main>
   <p>Oi, momo. Feliz aniversário.</p>
 
-  <p>Você sabia, príncipe, que no mundo existem milhares de formas de desejar feliz aniversário?</p>
+  <p>Você sabia que no mundo existem milhares de crenças de aniversário?</p>
 
-  <p>Mas também existem milhares de crenças de como não desejar?</p>
+  <p>E eu acho que, na verdade, nenhuma delas chega aos pés do que eu queria trazer pra você nesse aniversário. Eu não sei mais como desejar um feliz aniversário legal. Queria conseguir te trazer sorte, desejar que você alcançasse todos os seus sonhos, ou que você nunca tivesse dúvidas do tamanho do meu amor por você. Eu te amo tanto que nada seria capaz de mensurar o tamanho do meu amor, nem se eu <span class="falha"><span class="ruido" id="ruido"></span><input class="buraco" id="buraco" autocomplete="off" spellcheck="false" aria-label=""><span class="quase" id="quase"></span></span></p>
 
-  <p>A verdade é que eu não sei mais como desejar um feliz aniversário legal, então vou parar de enrolar e dizer que eu queria tanto um presente legal de verdade pra você, porque eu acho que você merece, e muito. Você é minha inspiração, minha paixão, meu coração todo. Queria que seus 23 anos viessem com descobertas de verdade, com vontades inexplicáveis de crescer e sonhar, porque isso é a única coisa que eu quero desejar de verdade pra você, ou pra gente: uma vida de aventuras, sonhos e vontades, loucuras assustadoras e diversão. Afinal, se a vida não for cheia disso... é cheia do quê?</p>
-
-  <a class="pista" href="/salada">esqueci qual era o jogo, mas acho que ele tinha que ser colorido…</a>
+  <p>Aliás, por acaso eu já te contei de onde veio o principal costume dos aniversários?</p>
 </main>
+<script>
+(function () {
+  var ruido = document.getElementById('ruido'), buraco = document.getElementById('buraco'), quase = document.getElementById('quase');
+  var sujo = '▓▒░█▌▐╳#%&*/\\|¦', texto = 'fosse até a l', passo = 0;
+  var t = setInterval(function () {
+    passo++;
+    var s = '';
+    for (var i = 0; i < texto.length; i++) {
+      s += (Math.random() < passo / 30) ? (Math.random() < .5 ? '' : sujo[Math.floor(Math.random() * sujo.length)]) : texto[i];
+    }
+    ruido.textContent = s;
+    if (passo > 45) { clearInterval(t); ruido.style.opacity = 0; setTimeout(function () { ruido.textContent = ''; }, 1300); }
+  }, 90);
+
+  function limpar(v) { return v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, ''); }
+  buraco.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return;
+    var v = limpar(buraco.value);
+    if (!v) return;
+    if (v.indexOf('atealua') === 0) { quase.textContent = 'quase. em outra língua.'; return; }
+    if (v.indexOf('tothemoon') === 0) v = 'tothemoon';
+    location.href = '/' + v;
+  });
+})();
+</script>
 </body>
 </html>

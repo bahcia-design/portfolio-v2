@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>para ela</title>
+<link rel="stylesheet" href="/estilo.css">
+<style>
+  body { background: #1b1714; color: #e9dfcf; }
+  .bolo { display: block; width: 100%; max-width: 520px; margin: 0 auto 32px; }
+  .brilho { animation: tremer 1.6s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
+  @keyframes tremer { from { opacity: 1; transform: scale(1) } to { opacity: .8; transform: scale(.9) } }
+</style>
+</head>
+<body>
+<main class="centro">
+  <svg class="bolo" id="bolo" viewBox="0 0 600 600" aria-label="bolo visto de cima"></svg>
+  <p>Redondo, pra parecer com ela. Aceso, pra brilhar como ela.</p>
+</main>
+<script>
+(function () {
+  var dentro = '101', volta = '01101011110111101110';
+  var svg = document.getElementById('bolo'), ns = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs) { var e = document.createElementNS(ns, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; }
+  var defs = el('defs', {});
+  defs.innerHTML = '<radialGradient id="luz"><stop offset="0" stop-color="#fff3c4"/><stop offset=".35" stop-color="#f0a93c" stop-opacity=".9"/><stop offset="1" stop-color="#f0a93c" stop-opacity="0"/></radialGradient>';
+  el('circle', { cx: 300, cy: 300, r: 285, fill: '#2a2420' });
+  el('circle', { cx: 300, cy: 300, r: 250, fill: '#e9dccb' });
+  el('circle', { cx: 300, cy: 300, r: 236, fill: '#f3e9dc' });
+  for (var i = 0; i < 48; i++) {
+    var a = i / 48 * Math.PI * 2;
+    el('circle', { cx: 300 + 243 * Math.cos(a), cy: 300 + 243 * Math.sin(a), r: 8, fill: '#e2d2bd' });
+  }
+  function vela(x, y, acesa) {
+    el('circle', { cx: x, cy: y, r: 9, fill: '#e9dfcf', stroke: '#c9b9a4', 'stroke-width': 1.5 });
+    if (acesa) {
+      el('circle', { class: 'brilho', cx: x, cy: y, r: 26, fill: 'url(#luz)' });
+      el('circle', { cx: x, cy: y, r: 3.5, fill: '#fff8e0' });
+    } else {
+      el('circle', { cx: x, cy: y, r: 2.5, fill: '#3a302a' });
+    }
+  }
+  for (var j = 0; j < volta.length; j++) {
+    var ang = -Math.PI / 2 + (j + 0.5) / (volta.length + 1) * Math.PI * 2;
+    vela(300 + 180 * Math.cos(ang), 300 + 180 * Math.sin(ang), volta[j] === '1');
+  }
+  for (var k = 0; k < dentro.length; k++) vela(262 + k * 38, 300, dentro[k] === '1');
+})();
+</script>
+</body>
+</html>

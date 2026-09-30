@@ -4,8 +4,15 @@
 
 Ritmo: **site (enigma) → descobre o jogo → algo dentro do jogo → resposta no endereço → próxima fase**
 
-### Fase 1 — Chicory (demo grátis) ✅ no ar
-1. `/` — a carta. No fim, a frase clicável "esqueci qual era o jogo, mas acho que ele tinha que ser colorido…" → leva pra `/salada`.
+### Fase 1 — As velas e a Lua (no ar após publicar)
+1. `/` — a carta. A frase termina em "nem se eu" e a continuação "fosse até a lua" vira ruído (efeito de defeito) e some. Sobra um espaço em branco onde ele pode digitar (sem botão; Enter envia).
+2. A carta fecha com: "Aliás, por acaso eu já te contei de onde veio o principal costume dos aniversários?" — NÃO é clicável. Ele responde digitando no endereço: **/artemis** (o bolo redondo dos gregos, oferecido a Ártemis, deusa da Lua). `/grecia` responde "Quase. mas pra quem era o bolo?"
+3. `/artemis` — bolo visto de cima, 23 velas. As 3 de dentro (`101`) = 5 = tamanho do grupo. As 20 do anel (`01101 01111 01111 01110`, acesa=1) = **M O O N**. Frase: "Redondo, pra parecer com ela. Aceso, pra brilhar como ela."
+4. De volta à carta: "nem se eu" + MOON → ele digita **to the moon** no buraco → `/tothemoon`. Se digitar "até a lua": "quase. em outra língua."
+5. `/tothemoon` — ainda vazio (só "…"). 🟡 Próxima etapa: pergunta que só quem jogou To the Moon responde (ideia em espera: o farol, que se chama Anya — PRECISA ser conferido no jogo).
+
+### Fase 2 — Chicory (demo grátis) — a encaixar depois
+1. (a carta antiga tinha a frase clicável "esqueci qual era o jogo…" → `/salada`; ela saiu da carta e ainda precisa de um novo caminho de entrada)
 2. `/salada` — só a foto de chicória. No código da página (Ctrl+U): `o velho Basil pode ter uma dica`.
 3. Chicória + colorido + Basil → o jogo é **Chicory** → ele digita `/chicory`.
 4. `/chicory` — só a imagem `flowerbud.jpg` (botão de flor fechado).
