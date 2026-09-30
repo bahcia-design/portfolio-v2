@@ -18,7 +18,7 @@ Ritmo: **site (enigma) → descobre o jogo → algo dentro do jogo → resposta 
 4. `/chicory` — só a imagem `flowerbud.jpg` (botão de flor fechado).
 5. No jogo, o Basil diz: "Some flowers bloom when in color. But others bloom only when blank."
 6. Ele troca o nome da imagem no endereço: `/color.jpg` = flor colorida, sem texto (ARMADILHA). `/blank.jpg` = flor sem cor → leva pra fase 2.
-- 🟡 As três imagens de flor são provisórias (desenho simples). Trocar pelas artes/fotos dela, com os mesmos nomes.
+- Imagens: `flowerbud.jpg` = botão de rosa vermelho (dela); `blank.jpg` = rosa clarinha/fantasma (dela); `color.jpg` = rosa vermelha GERADA por mim a partir do formato da clara (se ela tiver a versão colorida de verdade, trocar mantendo o nome).
 - 🟡 Falta decidir o que o `blank.jpg` mostra e qual é a fase 2 (ideia: papel em branco com dobras de coelho de origami → To the Moon).
 
 ---
