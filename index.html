@@ -11,49 +11,95 @@
   .buraco { font: inherit; color: inherit; background: transparent; border: 0; outline: 0; padding: 0; width: 13ch; caret-color: var(--destaque); }
   .quase { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--tinta-suave); margin-left: .5em; }
 
-  main { transition: opacity 1s ease .25s; }
+  main { transition: opacity .8s ease .15s; }
   body.intro main { opacity: 0; }
   body.intro { overflow: hidden; }
 
   #intro { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
-           background: radial-gradient(ellipse at 50% 40%, #28424f 0%, #1d3440 55%, #142530 100%);
-           transition: opacity .7s ease; cursor: pointer; perspective: 1100px; overflow: hidden; }
+           background: radial-gradient(ellipse at 50% 38%, #c9a27f 0%, #b48b6d 60%, #a27a5d 100%);
+           transition: opacity .6s ease; cursor: pointer; perspective: 1100px; overflow: hidden; }
   #intro.some { opacity: 0; pointer-events: none; }
-  .envelope { --w: min(78vw, 440px); --h: calc(var(--w) * .66);
+
+  .envelope { --w: min(80vw, 450px); --h: calc(var(--w) * .68); --kraft: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .38  0 0 0 0 .24  0 0 0 0 .1  0 0 0 .2 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
               position: relative; width: var(--w); height: var(--h); transform-style: preserve-3d;
-              opacity: 0; transform: translateY(40px) scale(.96); transition: opacity .8s ease, transform .9s ease;
-              filter: drop-shadow(0 18px 28px rgba(0, 0, 0, .45)); }
+              opacity: 0; transform: translateY(30px) scale(.95);
+              transition: opacity .5s ease, transform .6s cubic-bezier(.2, .8, .3, 1.15);
+              filter: drop-shadow(0 14px 18px rgba(80, 45, 20, .35)); }
   .envelope.entra { opacity: 1; transform: none; }
-  .verso { position: absolute; inset: 0; background: #b89f78; border-radius: 4px; }
-  .papel { position: absolute; left: 7%; right: 7%; top: 14%; bottom: 6%; z-index: 2;
-           transition: transform 1.05s cubic-bezier(.3, .1, .2, 1); }
-  .envelope.sobe .papel { transform: translateY(calc(var(--h) * -.52)); }
-  .folha { position: absolute; inset: 0; background: var(--papel); border-radius: 2px; box-shadow: 0 2px 10px rgba(0, 0, 0, .25); overflow: hidden;
-           transform-origin: 50% 50%; }
-  .linhas { position: absolute; inset: 14% 12% auto 12%; height: 60%; opacity: .45; transition: opacity 1.4s ease;
-            background: repeating-linear-gradient(to bottom, #b6a48c 0 2px, transparent 2px 13px); filter: blur(.4px); }
+  .verso { position: absolute; inset: 0; background: #b98f5c; border-radius: 4px; }
+
+  .papel { position: absolute; left: 6%; right: 6%; top: 12%; bottom: 5%; z-index: 2; transition: transform .8s cubic-bezier(.3, .1, .2, 1); }
+  .envelope.sobe .papel { transform: translateY(calc(var(--h) * -.58)); }
+  .xadrez { position: absolute; left: -5%; top: 7%; width: 64%; height: 72%; transform: rotate(-8deg); border-radius: 2px; box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
+            background: repeating-linear-gradient(0deg, rgba(255, 255, 255, .5) 0 9px, transparent 9px 18px),
+                        repeating-linear-gradient(90deg, rgba(255, 255, 255, .5) 0 9px, transparent 9px 18px), #b5363c; }
+  .folha { position: absolute; inset: 0; background: var(--papel); border-radius: 2px; box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+           overflow: hidden; transform-origin: 50% 50%; }
+  .linhas { position: absolute; inset: 0; transition: opacity .7s ease; }
+  .pauta { position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, transparent 0 21px, rgba(140, 165, 180, .38) 21px 22px); }
+  .margem { position: absolute; left: 14%; top: 0; bottom: 0; width: 1px; background: rgba(214, 110, 110, .55); }
+  .furo { position: absolute; left: 4%; width: 3.2%; aspect-ratio: 1; border-radius: 50%; background: #c9b9a0; box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3); }
+  .linhas svg { position: absolute; overflow: visible; }
+  .laco { left: 1%; top: -2%; width: 24%; transform: rotate(-14deg); filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .25)); }
+  .coracao { right: 4%; top: 5%; width: 15%; transform: rotate(8deg); }
+  .buque { left: 4%; bottom: 30%; width: 19%; transform: rotate(-6deg); filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .3)); }
+
   .frente { position: absolute; inset: 0; z-index: 3; border-radius: 4px;
-            background: linear-gradient(175deg, #e3cfab, #d2ba92);
-            clip-path: polygon(0 100%, 0 0, 50% 64%, 100% 0, 100% 100%); }
+            background: var(--kraft), linear-gradient(175deg, #e6c999, #d6b27d);
+            clip-path: polygon(0 100%, 0 0, 50% 61%, 100% 0, 100% 100%); }
   .aba { position: absolute; left: 0; top: 0; width: 100%; height: 64%; z-index: 4; transform-origin: 50% 0;
-         transform: rotateX(0deg); transition: transform .95s cubic-bezier(.4, 0, .2, 1); transform-style: preserve-3d; }
-  .aba i { position: absolute; inset: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); background: linear-gradient(#d9c39c, #c9b189); }
-  .aba b { position: absolute; left: 50%; top: 100%; width: 16%; aspect-ratio: 1; margin: -11% 0 0 -8%; border-radius: 50%;
-           background: radial-gradient(circle at 35% 30%, #d4623f, #9d3a24 70%); box-shadow: 0 2px 4px rgba(0, 0, 0, .35); backface-visibility: hidden; }
+         transform: rotateX(0deg); transition: transform .6s cubic-bezier(.4, 0, .2, 1); transform-style: preserve-3d; }
+  .aba i { position: absolute; inset: 0; clip-path: polygon(0 0, 100% 0, 50% 100%);
+           background: var(--kraft), linear-gradient(#e2c592, #d2ae78); }
+  .aba b { position: absolute; left: 50%; top: 100%; width: 17%; aspect-ratio: 1; margin: -10.5% 0 0 -8.5%; backface-visibility: hidden;
+           filter: drop-shadow(0 2px 2px rgba(60, 30, 10, .35)); transform: rotate(-8deg); }
+  .aba b svg { display: block; width: 100%; height: 100%; }
   .envelope.abre .aba { transform: rotateX(-180deg); }
   .envelope.aberta .aba { z-index: 1; }
-  .envelope.aberta .aba i { background: linear-gradient(#b89f78, #a98f68); }
+  .envelope.aberta .aba i { background: var(--kraft), linear-gradient(#bf9863, #ae8652); }
 
-  .g-ok { }
+  .cora { position: absolute; z-index: 9; top: 20%; color: #c23b3b; opacity: 0; font-size: 22px; pointer-events: none; }
+  .envelope.abre .cora { animation: flutua 1.5s ease-out forwards; animation-delay: var(--d); }
+  @keyframes flutua { 0% { opacity: 0; transform: translateY(0) scale(.4) rotate(0) }
+                      25% { opacity: 1 }
+                      100% { opacity: 0; transform: translateY(-110px) scale(1.1) rotate(var(--r)) } }
 </style>
 </head>
 <body class="intro">
 <div id="intro" aria-hidden="true">
   <div class="envelope" id="envelope">
     <div class="verso"></div>
-    <div class="papel" id="papel"><div class="folha" id="folha"><div class="linhas" id="linhas"></div></div></div>
+    <div class="papel" id="papel">
+      <div class="xadrez"></div>
+      <div class="folha" id="folha">
+        <div class="linhas" id="linhas">
+          <div class="pauta"></div><div class="margem"></div>
+          <i class="furo" style="top:16%"></i><i class="furo" style="top:46%"></i><i class="furo" style="top:76%"></i>
+          <svg class="laco" viewBox="0 0 80 62"><defs><linearGradient id="fita" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d94a4a"/><stop offset="1" stop-color="#a32929"/></linearGradient></defs>
+            <path d="M40 30C22 4 0 8 5 28c4 13 26 12 35 2z" fill="url(#fita)" stroke="#8a2222" stroke-width="1.2"/>
+            <path d="M40 30C58 4 80 8 75 28c-4 13-26 12-35 2z" fill="url(#fita)" stroke="#8a2222" stroke-width="1.2"/>
+            <path d="M37 34 22 60l13-7 6-14zM43 34l15 26-13-7-6-14z" fill="#b53333" stroke="#8a2222" stroke-width="1.2"/>
+            <rect x="33" y="22" width="14" height="15" rx="5" fill="#c83c3c" stroke="#8a2222" stroke-width="1.2"/></svg>
+          <svg class="coracao" viewBox="0 0 100 92"><defs><radialGradient id="cg" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#e0564f"/><stop offset="1" stop-color="#b02a2c"/></radialGradient></defs>
+            <path d="M50 88C8 58 0 32 14 16 28 2 46 10 50 26 54 10 72 2 86 16c14 16 6 42-36 72z" fill="url(#cg)"/>
+            <path d="M26 24c6-6 14-6 20 2M22 40c8 10 16 18 26 26M60 20c6-4 14-2 18 6M64 42c-4 8-10 14-16 20M38 34c6 6 10 12 14 20" fill="none" stroke="#8f1f24" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/></svg>
+          <svg class="buque" viewBox="0 0 80 100"><path d="M14 10h52l10 34-14 22-16 30H34L26 66 6 44z" fill="#fff" stroke="#fff" stroke-width="8" stroke-linejoin="round"/>
+            <path d="M40 92V50M28 92 24 52M52 92 56 52" stroke="#4d8a45" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <path d="M40 66c-10-2-18-8-20-16 10 0 18 6 20 16zM40 62c10-2 16-8 18-14-10 0-16 4-18 14z" fill="#5c9e52"/>
+            <path d="M14 34c0-12 4-16 6-20 2 4 8 8 8 20-4 4-10 4-14 0zM32 28c0-12 5-18 8-22 3 4 8 10 8 22-5 4-11 4-16 0zM52 34c0-12 6-16 8-20 2 4 6 8 6 20-4 4-10 4-14 0z" fill="#d8434e"/>
+            <path d="M22 80c6 6 30 6 36 0l-4 12c-8 4-20 4-28 0z" fill="#c23b3b"/></svg>
+        </div>
+      </div>
+    </div>
     <div class="frente"></div>
-    <div class="aba"><i></i><b></b></div>
+    <div class="aba"><i></i><b><svg viewBox="0 0 100 92"><defs><radialGradient id="cg2" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#e0564f"/><stop offset="1" stop-color="#a8262a"/></radialGradient></defs>
+      <path d="M50 88C8 58 0 32 14 16 28 2 46 10 50 26 54 10 72 2 86 16c14 16 6 42-36 72z" fill="url(#cg2)"/>
+      <path d="M26 24c6-6 14-6 20 2M22 40c8 10 16 18 26 26M60 20c6-4 14-2 18 6M64 42c-4 8-10 14-16 20M38 34c6 6 10 12 14 20" fill="none" stroke="#8f1f24" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/></svg></b></div>
+    <span class="cora" style="left:14%;--d:.05s;--r:-25deg">♥</span>
+    <span class="cora" style="left:30%;--d:.2s;--r:20deg;font-size:16px">♥</span>
+    <span class="cora" style="left:52%;--d:.1s;--r:-15deg;font-size:26px">♥</span>
+    <span class="cora" style="left:70%;--d:.3s;--r:30deg;font-size:18px">♥</span>
+    <span class="cora" style="left:84%;--d:.15s;--r:-30deg">♥</span>
   </div>
 </div>
 <main>
@@ -84,29 +130,29 @@
       timers.forEach(clearTimeout);
       document.body.classList.remove('intro');
       intro.classList.add('some');
-      setTimeout(function () { if (intro.parentNode) intro.parentNode.removeChild(intro); }, rapido ? 100 : 800);
-      setTimeout(liberar, rapido ? 100 : 900);
+      setTimeout(function () { if (intro.parentNode) intro.parentNode.removeChild(intro); }, rapido ? 100 : 700);
+      setTimeout(liberar, rapido ? 100 : 800);
     }
     if (/[?&]pular/.test(location.search)) { fim(true); return; }
     intro.addEventListener('click', function () { fim(false); });
 
     var etapas = [];
     function etapa(ms, fn) { etapas.push([ms, fn]); }
-    etapa(150, function () { env.classList.add("entra"); });
-    etapa(1100, function () { env.classList.add("abre"); });
-    etapa(1600, function () { env.classList.add("aberta"); });
-    etapa(2200, function () { env.classList.add("sobe"); });
-    etapa(3450, function () {
+    etapa(80, function () { env.classList.add('entra'); });
+    etapa(650, function () { env.classList.add('abre'); });
+    etapa(1000, function () { env.classList.add('aberta'); });
+    etapa(1200, function () { env.classList.add('sobe'); });
+    etapa(2050, function () {
       var r = folha.getBoundingClientRect();
       var dx = innerWidth / 2 - (r.left + r.width / 2), dy = innerHeight / 2 - (r.top + r.height / 2);
       var s = Math.max(innerWidth / r.width, innerHeight / r.height) * 1.04;
       papel.style.zIndex = 10;
-      folha.style.transition = 'transform 1.5s cubic-bezier(.65, 0, .25, 1), box-shadow 1.5s';
+      folha.style.transition = 'transform 1s cubic-bezier(.65, 0, .25, 1), box-shadow 1s';
       folha.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')';
       folha.style.boxShadow = 'none';
       linhas.style.opacity = 0;
     });
-    etapa(5100, function () { fim(false); });
+    etapa(3050, function () { fim(false); });
     if (/[?&]manual/.test(location.search)) { window.__etapas = etapas.map(function (e) { return e[1]; }); return; }
     etapas.forEach(function (e) { depois(e[0], e[1]); });
   })();
@@ -158,13 +204,14 @@
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('.g'), function (el) {
-    var orig = el.textContent;
+    var orig = el.textContent, first = true;
     aoLiberar(function () {
       (function agenda() {
         setTimeout(function () {
           if (document.hidden) { agenda(); return; }
           if (rnd() < .3) sumir(el, orig, agenda); else rajada(el, orig, false, agenda);
-        }, 4000 + rnd() * 11000);
+        }, first ? 1200 + rnd() * 1800 : 3500 + rnd() * 6000);
+        first = false;
       })();
     });
   });
@@ -198,9 +245,9 @@
     setTimeout(function () {
       if (document.hidden || document.activeElement === buraco || buraco.value) { fantasma(); return; }
       roteiro([[pick(['fosse atÃ©', 'fosse a▒', 'fo', 'fosse até a l']), 70 + rnd() * 70, .5, '', true], ['', 0]], fantasma);
-    }, 8000 + rnd() * 12000);
+    }, 5000 + rnd() * 7000);
   }
-  function dispara() { aoLiberar(function () { setTimeout(sequencia, 1800 + rnd() * 1800); }); }
+  function dispara() { aoLiberar(function () { setTimeout(sequencia, 900 + rnd() * 900); }); }
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es, io) {
       if (!feito && es[0].isIntersecting) { feito = true; io.disconnect(); dispara(); }
