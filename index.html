@@ -184,19 +184,6 @@
     });
   }
 
-  Array.prototype.forEach.call(document.querySelectorAll('.g'), function (el) {
-    var orig = el.textContent, first = true;
-    aoLiberar(function () {
-      (function agenda() {
-        setTimeout(function () {
-          if (document.hidden) { agenda(); return; }
-          if (rnd() < .3) sumir(el, orig, agenda); else rajada(el, orig, false, agenda);
-        }, first ? 1200 + rnd() * 1800 : 3500 + rnd() * 6000);
-        first = false;
-      })();
-    });
-  });
-
   var cauda = document.getElementById('cauda'), buraco = document.getElementById('buraco'), quase = document.getElementById('quase');
   var origC = 'fosse até a lua', feito = false;
   function roteiro(passos, fim) {
@@ -228,12 +215,46 @@
       roteiro([[pick(['fosse atÃ©', 'fosse a▒', 'fo', 'fosse até a l']), 70 + rnd() * 70, .5, '', true], ['', 0]], fantasma);
     }, 5000 + rnd() * 7000);
   }
-  function dispara() { aoLiberar(function () { setTimeout(sequencia, 900 + rnd() * 900); }); }
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es, io) {
-      if (!feito && es[0].isIntersecting) { feito = true; io.disconnect(); dispara(); }
-    }, { threshold: 1 }).observe(cauda);
-  } else { dispara(); }
+  // os defeitos acompanham a leitura: comecam no topo e descem no ritmo de quem le
+  var gs = Array.prototype.slice.call(document.querySelectorAll(".g")), main = document.querySelector("main");
+  var PALAVRAS_POR_S = 4.5;
+  function palavrasAntes(el) { var r = document.createRange(); r.setStart(main, 0); r.setEndBefore(el); return r.toString().trim().split(/\s+/).length; }
+  function visivel(el) { var r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight * .9; }
+  function quandoVisivel(el, fn) { (function t() { if (document.hidden || !visivel(el)) { setTimeout(t, 400); return; } fn(); })(); }
+  function roda(el, forte) {
+    if (el._ocupado) return;
+    el._ocupado = true;
+    var livre = function () { el._ocupado = false; };
+    if (forte) sumir(el, el._orig, livre); else rajada(el, el._orig, false, livre);
+  }
+  function tremor() {
+    var ps = main.querySelectorAll("p"), p = ps[Math.floor(rnd() * ps.length)], n = 1 + Math.floor(rnd() * 2);
+    (function t() {
+      if (n-- <= 0) { p.style.transform = ""; return; }
+      p.style.transform = "translate(" + ((rnd() - .5) * 3).toFixed(1) + "px," + ((rnd() - .5) * 2).toFixed(1) + "px)";
+      setTimeout(function () { p.style.transform = ""; setTimeout(t, 60 + rnd() * 120); }, 50 + rnd() * 90);
+    })();
+  }
+  aoLiberar(function () {
+    var fim = 0;
+    gs.forEach(function (el, i) {
+      el._orig = el.textContent;
+      var t = 900 + palavrasAntes(el) / PALAVRAS_POR_S * 1000 * (.9 + rnd() * .2);
+      fim = Math.max(fim, t);
+      setTimeout(function () { quandoVisivel(el, function () { roda(el, i === 2); }); }, t);
+    });
+    var tc = 900 + palavrasAntes(cauda) / PALAVRAS_POR_S * 1000;
+    fim = Math.max(fim, tc);
+    setTimeout(function () { quandoVisivel(cauda, function () { setTimeout(sequencia, 300 + rnd() * 500); }); }, tc);
+    setTimeout(function solto() {
+      if (!document.hidden) {
+        var vis = gs.filter(visivel), el = pick(vis.length ? vis : gs);
+        roda(el, rnd() < .25);
+        if (rnd() < .4) tremor();
+      }
+      setTimeout(solto, 4500 + rnd() * 6000);
+    }, fim + 3000);
+  });
 
   function limpar(v) { return v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, ''); }
   buraco.addEventListener('keydown', function (e) {
