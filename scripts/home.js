@@ -163,15 +163,18 @@ window.onload = function (){
 	});
 
 	function limpar(v) { return v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, ''); }
-	buraco.addEventListener('keydown', function (e) {
-		if (e.key !== 'Enter') return;
-		var v = limpar(buraco.value);
-		if (!v) return;
-		if (v.indexOf('atealua') === 0) { quase.textContent = 'quase. em outra língua.'; return; }
-		if (v.indexOf('tothemoon') === 0) v = 'tothemoon';
-
-		// PASSAR PRA PROXIMA FASE AQUI ANSWER CHECK
-		window.location.href = "https://youtube.com"
-	});
+		buraco.addEventListener('keydown', function (e) {
+			if (e.key !== 'Enter') return;
+			var v = limpar(buraco.value);
+			if (!v) return;
+			if (v.indexOf('atealua') === 0) { 
+				quase.textContent = 'quase. em outra língua.'; 
+				return; 
+			}
+			if (v.indexOf('tothemoon') === 0) {
+			// PASSAR PRA PROXIMA FASE AQUI ANSWER CHECK
+				window.location.href = "https://youtube.com"
+			}
+		});
 })();
 }
