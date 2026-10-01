@@ -348,14 +348,14 @@ function mostrarTransicao(urlIframe) {
 
 	requestAnimationFrame(function () {
 		overlay.style.transform = "translateY(0)"
-		setTimeout(() => {
-			for(let i=0;i<20;i++){
-				setTimeout(() => {
-					explodirConfete(document.querySelector(".fdsdesc"), 3.9)
-					explodirConfete(document.querySelector(".fdsdesc"), 3.9)
-				}, i*120)
-			}
-		}, 850)
+		// setTimeout(() => {
+		// 	for(let i=0;i<20;i++){
+		// 		setTimeout(() => {
+		// 			explodirConfete(document.querySelector(".fdsdesc"), 3.9)
+		// 			explodirConfete(document.querySelector(".fdsdesc"), 3.9)
+		// 		}, i*120)
+		// 	}
+		// }, 850)
 	})
 
 	botao.addEventListener("click", function () {

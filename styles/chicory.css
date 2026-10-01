@@ -1,4 +1,4 @@
-body{
+body {
 	margin: 0;
 	padding: 0;
 	width: 100vw;
@@ -9,11 +9,39 @@ body{
 	align-items: center;
 }
 
-img{
-	width: 650px;
+img {
+	position: absolute;
+	top: 120px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 350px;
+	border-radius: 4px;
 }
 
-.hint{
+.answer {
+	position: absolute;
+	top: 23px;
+	right: 23px;
+	padding: 8px;
+	border: none;
+	outline: none;
+	background-color: #f7f7f70c;
+	color: #ccc;
+	font-size: 14px;
+	border: solid 1px #cccccc52;
+}
+
+h2 {
+	position: absolute;
+	top: 60px;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+	font-family: 'Cormorant Garamond', Georgia, serif;
+	color: #ccc;
+}
+
+.hint {
 	position: absolute;
 	bottom: 12%;
 	left: 50%;
