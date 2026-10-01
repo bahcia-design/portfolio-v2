@@ -3,7 +3,7 @@ body{
 	padding: 0;
 	width: 100vw;
 	height: 100vh;
-	background: #120023;
+	background: #0e0e0e;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -19,5 +19,5 @@ img{
 	left: 50%;
 	transform: translateX(-50%);
 	text-align: center;
-	color: #120023;
+	color: #0e0e0e;
 }

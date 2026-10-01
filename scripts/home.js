@@ -222,14 +222,18 @@ function openCard() {
 				}, 150*i)
 			}
 
-			history.pushState({}, "", "/a.html")
+			setTimeout(() => {
+				mostrarTransicao()
+				history.pushState({}, "", "/portfolio-v2/a.html")
+			}, 1200)
+
 			// window.location.href = "./a.html"
 		}
 	});
 
 }
 
-function explodirConfete(input) {
+function explodirConfete(input, scale = 1) {
 	var rect = input.getBoundingClientRect()
 	var quantidade = 35
 	var cores = ["#ff4d6d", "#ffd166", "#06d6a0", "#4dabf7", "#c77dff", "#ffffff"]
@@ -271,6 +275,9 @@ function explodirConfete(input) {
 		confete.style.transition = "transform " + duracao + "ms cubic-bezier(.15,.8,.3,1), opacity " + duracao + "ms ease-out"
 
 		container.appendChild(confete)
+		if(scale != 1){
+			container.style.transform = `translateY(160px) scale(${scale})`
+		}
 
 		setTimeout(function (confete, x, y) {
 			confete.style.transform = "translate(calc(-50% + " + x + "px), calc(-50% + " + y + "px)) rotate(" + (Math.random() * 720 - 360) + "deg)"
@@ -282,3 +289,86 @@ function explodirConfete(input) {
 		container.remove()
 	}, 1200)
 }
+
+
+function mostrarTransicao(urlIframe) {
+	var overlay = document.createElement("div")
+	var secao = document.createElement("div")
+	var botao = document.createElement("button")
+	var iframe = document.createElement("iframe")
+
+	overlay.style.position = "fixed"
+	overlay.style.left = "0"
+	overlay.style.top = "0"
+	overlay.style.width = "100vw"
+	overlay.style.height = "100vh"
+	overlay.style.background = "#111"
+	overlay.style.zIndex = "9999"
+	overlay.style.transform = "translateY(-100%)"
+	overlay.style.transition = "transform 0.8s cubic-bezier(.65, 0, .25, 1)"
+	overlay.style.display = "flex"
+	overlay.style.flexDirection = "column"
+	overlay.style.alignItems = "center"
+	overlay.style.justifyContent = "center"
+
+	secao.style.width = "80%"
+	secao.style.maxWidth = "800px"
+	secao.style.minHeight = "300px"
+	secao.style.display = "flex"
+	secao.style.flexDirection = "column"
+	secao.style.alignItems = "center"
+	secao.style.justifyContent = "center"
+	secao.innerHTML = `
+	<div class="fase-concluida"> 
+		<h2 class="fdsdesc">Boa passou a primeira <span class="joia">👍</span></h2>
+		<p > pra ajudar a resolver a próxima fase agora você vai ter que jogar <a href="https://store.steampowered.com/app/206440/To_the_Moon/" target="_blank" rel="noopener noreferrer">To the Moon</a> </p> 
+	</div>`
+
+	botao.textContent = "Avançar"
+	botao.classList.add("adv-btn")
+
+	overlay.appendChild(secao)
+	overlay.appendChild(botao)
+
+	iframe.src = "./a.html"
+	iframe.style.position = "fixed"
+	iframe.style.left = "0"
+	iframe.style.top = "0"
+	iframe.style.width = "100vw"
+	iframe.style.height = "100vh"
+	iframe.style.border = "0"
+	iframe.style.margin = "0"
+	iframe.style.padding = "0"
+	iframe.style.zIndex = "9998"
+	iframe.style.transform = "translateY(-100%)"
+	iframe.style.transition = "transform 0.8s cubic-bezier(.65, 0, .25, 1)"
+
+	document.body.appendChild(iframe)
+	document.body.appendChild(overlay)
+
+	requestAnimationFrame(function () {
+		overlay.style.transform = "translateY(0)"
+		setTimeout(() => {
+			for(let i=0;i<20;i++){
+				setTimeout(() => {
+					explodirConfete(document.querySelector(".fdsdesc"), 3.9)
+					explodirConfete(document.querySelector(".fdsdesc"), 3.9)
+				}, i*120)
+			}
+		}, 850)
+	})
+
+	botao.addEventListener("click", function () {
+		overlay.style.transform = "translateY(100%)"
+		iframe.style.transform = "translateY(0)"
+
+		setTimeout(() => {
+			window.location.href = "./a.html"
+		}, 1500)
+	})
+	
+
+	return secao
+}
+
+// mostrarTransicao()

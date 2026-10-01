@@ -9,6 +9,6 @@ img.addEventListener("click", () => {
 	}
 
 	if(res.toLowerCase() == "farol"){
-		alert("nao cara")
+		alert("é simples mas nem tanto")
 	}
 })
