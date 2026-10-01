@@ -75,8 +75,8 @@ p {
 }
 
 .tick.bolded {
-  /* font-weight: bold !important; */
-  color: #7e7e7e;
+  font-weight: bold !important;
+  /* color: #7e7e7e; */
 }
 
 .centro {
@@ -150,7 +150,6 @@ a {
   outline: none;
   border-radius: 6px;
   font-size: 21px;
-
 }
 
 .adv-btn:hover {
