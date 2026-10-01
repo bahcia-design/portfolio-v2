@@ -1,11 +1,92 @@
-window.onload = function (){
-	(function () {
+// window.onclick = function (){
+// 	openCard()
+// }
+
+let envelope = document.querySelector("#envelope")
+const mainDiv = document.querySelector("main")
+const closeEnvelope = document.querySelector(".close-envelope")
+let isOpening = false
+let openedEnvelopeOnce = false
+
+closeEnvelope.addEventListener("click", (e) => {
+	// e.preventDefault()
+	// e.stopImmediatePropagation()
+
+	// console.log("closing")
+	const isOpened = !mainDiv.classList.contains("hidden")
+	if(isOpened){
+		closeCard()
+	}
+})
+
+envelope.addEventListener("click", (e) => {
+	e.preventDefault()
+	e.stopImmediatePropagation()
+
+	// console.log("opening")
+	const isOpened = !mainDiv.classList.contains("hidden")
+	if(!isOpened && isOpening == false){
+		openCard()
+	}
+})
+
+function closeCard() {
+	var env = document.getElementById("envelope")
+	var folha = document.getElementById("folha")
+	var papel = document.getElementById("papel")
+	var linhas = document.getElementById("linhas")
+
+	// Para a folha no estado atual
+	folha.style.transition = "transform 1s cubic-bezier(.65, 0, .25, 1), opacity 1s"
+
+	// Volta a folha para o estado original
+	folha.style.transform = ""
+	folha.style.opacity = ""
+
+	mainDiv.classList.add("hidden")
+
+	setTimeout(function () {
+		// Remove o estado aberto da folha/envelope
+		env.classList.remove("sobe")
+		env.classList.remove("aberta")
+		env.classList.remove("abre")
+
+		// Esconde novamente as linhas
+		linhas.style.opacity = ""
+
+		// Restaura o papel
+		papel.style.zIndex = ""
+		papel.style.opacity = ""
+
+		// Remove o estado de entrada
+		env.classList.remove("entra")
+
+		// Limpa os estilos temporários
+		folha.style.transition = ""
+		folha.style.transform = ""
+		folha.style.opacity = ""
+
+		setTimeout(() => {
+			addHintOnTutPage()
+		}, 500)
+
+	}, 1000)
+}
+
+function addHintOnTutPage(){
+	const dick = document.querySelector(".dick")
+	dick.classList.remove("hidden")
+}
+
+function openCard() {
+	isOpening = true
+	openedEnvelopeOnce = true
+
 	var rnd = Math.random;
 	function pick(a) { return a[Math.floor(rnd() * a.length)]; }
 
 	var liberado = false, fila = [];
 	function aoLiberar(fn) { if (liberado) fn(); else fila.push(fn); }
-	function liberar() { liberado = true; fila.forEach(function (f) { f(); }); fila = []; }
 
 	(function abertura() {
 		var intro = document.getElementById('intro'), env = document.getElementById('envelope'),
@@ -16,9 +97,12 @@ window.onload = function (){
 			if (acabou) return; acabou = true;
 			timers.forEach(clearTimeout);
 			document.body.classList.remove('intro');
-			intro.classList.add('some');
-			setTimeout(function () { if (intro.parentNode) intro.parentNode.removeChild(intro); }, rapido ? 100 : 700);
-			setTimeout(liberar, rapido ? 100 : 300);
+			mainDiv.classList.remove("hidden")
+			isOpening = false
+			// addHintOnTutPage()
+			// intro.classList.add('some');
+			// setTimeout(function () { if (intro.parentNode) intro.parentNode.removeChild(intro); }, rapido ? 100 : 700);
+			// setTimeout(liberar, rapido ? 100 : 300);
 		}
 		if (/[?&]pular/.test(location.search)) { fim(true); return; }
 		intro.addEventListener('click', function () { fim(false); });
@@ -32,7 +116,7 @@ window.onload = function (){
 		etapa(2050, function () {
 			var r = folha.getBoundingClientRect();
 			var dx = innerWidth / 2 - (r.left + r.width / 2), dy = innerHeight / 2 - (r.top + r.height / 2);
-			var s = Math.max(innerWidth / r.width, innerHeight / r.height) * 1.04;
+			var s = Math.max(innerWidth / r.width, innerHeight / r.height) * 1.54;
 			papel.style.zIndex = 10;
 			folha.style.transition = 'transform 1s cubic-bezier(.65, 0, .25, 1), box-shadow 1s';
 			folha.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')';
@@ -56,71 +140,32 @@ window.onload = function (){
 		return s;
 	}
 
-	function quadro(el, orig, forte) {
-		el.style.opacity = forte ? (.1 + rnd() * .5) : (.4 + rnd() * .5);
-		el.style.left = ((rnd() - .5) * (forte ? 7 : 3)).toFixed(1) + 'px';
-		el.style.textShadow = rnd() < .6
-			? ((rnd() - .5) * 3).toFixed(1) + 'px 0 rgba(176,69,45,.55), ' + ((rnd() - .5) * -3).toFixed(1) + 'px 0 rgba(29,52,64,.55)'
-			: 'none';
-		el.textContent = rnd() < (forte ? .6 : .3) ? corrompe(orig, .08) : orig;
-	}
-	function limpa(el, orig) {
-		el.style.opacity = ''; el.style.left = ''; el.style.textShadow = ''; el.textContent = orig;
-	}
-	function rajada(el, orig, forte, fim) {
-		var n = 2 + Math.floor(rnd() * (forte ? 5 : 3)), i = 0;
-		(function passo() {
-			if (i++ >= n) { limpa(el, orig); if (fim) fim(); return; }
-			quadro(el, orig, forte);
+	function iniciarTicks() {
+		var ticks = Array.prototype.slice.call(document.querySelectorAll("span.tick"))
+
+		function piscar(el) {
+			el.classList.add("bolded")
+
 			setTimeout(function () {
-				if (rnd() < .5) limpa(el, orig);
-				setTimeout(passo, 30 + rnd() * 140);
-			}, 40 + rnd() * 110);
-		})();
-	}
-	function sumir(el, orig, fim) {
-		rajada(el, orig, true, function () {
-			el.style.transition = 'opacity ' + (.25 + rnd() * .4).toFixed(2) + 's';
-			el.style.opacity = 0;
+				el.classList.remove("bolded")
+
+				setTimeout(function () {
+					piscar(el)
+				}, 300 + Math.random() * 1200)
+			}, 150)
+		}
+
+		ticks.forEach(function (el) {
 			setTimeout(function () {
-				el.style.transition = 'opacity ' + (.8 + rnd() * .8).toFixed(2) + 's';
-				el.style.opacity = '';
-				setTimeout(function () { el.style.transition = ''; if (fim) fim(); }, 1700);
-			}, 900 + rnd() * 2200);
-		});
+				piscar(el)
+			}, Math.random() * 1500)
+		})
 	}
+	iniciarTicks()
 
 	var cauda = document.getElementById('cauda'), buraco = document.getElementById('buraco'), quase = document.getElementById('quase');
-	var origC = 'fosse até', feito = false;
-	function roteiro(passos, fim) {
-		var i = 0;
-		(function prox() {
-			if (i >= passos.length) { if (fim) fim(); return; }
-			var p = passos[i++];
-			cauda.textContent = p[0];
-			cauda.style.opacity = p[2] === undefined ? '' : p[2];
-			cauda.style.left = p[3] || '';
-			cauda.style.textShadow = p[4] ? '1.5px 0 rgba(176,69,45,.6), -1.5px 0 rgba(29,52,64,.6)' : 'none';
-			setTimeout(prox, p[1] * (.75 + rnd() * .6));
-		})();
-	}
-	function sequencia() {
-		roteiro([
-			['fosse atÃ©', 150, .7, '2px', true],
-			[origC, 380],
-			[origC + ' fosse a', 110, .8, '-3px', true],
-			['fosse at', 690, .75],
-			['fosse a▒', 90, .5, '1px', true],
-			['fos', 70, .4, '-2px', true],
-			['', 0]
-		], fantasma);
-	}
-	function fantasma() {
-		setTimeout(function () {
-			if (document.hidden || document.activeElement === buraco || buraco.value) { fantasma(); return; }
-			roteiro([[pick(['fosse a▒', 'fo', 'f▒', 'fosse atÃ']), 50 + rnd() * 60, .5, '', true], ['', 0]], fantasma);
-		}, 10000 + rnd() * 14000);
-	}
+	var origC = 'fosse', feito = false;
+
 	// os defeitos acompanham a leitura: comecam no topo e descem no ritmo de quem le
 	var gs = Array.prototype.slice.call(document.querySelectorAll(".g")), main = document.querySelector("main");
 	var PALAVRAS_POR_S = 8;
@@ -128,10 +173,7 @@ window.onload = function (){
 	function visivel(el) { var r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight * .9; }
 	function quandoVisivel(el, fn) { (function t() { if (document.hidden || !visivel(el)) { setTimeout(t, 400); return; } fn(); })(); }
 	function roda(el, forte) {
-		if (el._ocupado) return;
-		el._ocupado = true;
-		var livre = function () { el._ocupado = false; };
-		if (forte) sumir(el, el._orig, livre); else rajada(el, el._orig, false, livre);
+		return
 	}
 	function tremor() {
 		var ps = main.querySelectorAll("p"), p = ps[Math.floor(rnd() * ps.length)], n = 1 + Math.floor(rnd() * 2);
@@ -151,7 +193,7 @@ window.onload = function (){
 		});
 		var tc = 200 + palavrasAntes(cauda) / PALAVRAS_POR_S * 1000;
 		fim = Math.max(fim, tc);
-		setTimeout(function () { quandoVisivel(cauda, function () { setTimeout(sequencia, 300 + rnd() * 500); }); }, tc);
+		setTimeout(function () { quandoVisivel(cauda, function () { cauda.textContent = origC }); }, tc);
 		setTimeout(function solto() {
 			if (!document.hidden) {
 				var vis = gs.filter(visivel), el = pick(vis.length ? vis : gs);
@@ -163,18 +205,80 @@ window.onload = function (){
 	});
 
 	function limpar(v) { return v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, ''); }
-		buraco.addEventListener('keydown', function (e) {
-			if (e.key !== 'Enter') return;
-			var v = limpar(buraco.value);
-			if (!v) return;
-			if (v.indexOf('atealua') === 0) { 
-				quase.textContent = 'quase. em outra língua.'; 
-				return; 
-			}
-			if (v.indexOf('tothemoon') === 0) {
+	buraco.addEventListener('keydown', function (e) {
+		if (e.key !== 'Enter') return;
+		var v = limpar(buraco.value);
+		if (!v) return;
+		if (v.indexOf('atealua') === 0) {
+			quase.textContent = 'quase. em outra língua.';
+			return;
+		}
+		if (v.indexOf('tothemoon') === 0) {
 			// PASSAR PRA PROXIMA FASE AQUI ANSWER CHECK
-				window.location.href = "https://youtube.com"
+			for(let i = 0;i<4;i++){
+				explodirConfete(document.querySelector(".buraco"))
+				setTimeout(() => {
+					explodirConfete(document.querySelector(".buraco"))
+				}, 150*i)
 			}
-		});
-})();
+
+			history.pushState({}, "", "/a.html")
+			// window.location.href = "./a.html"
+		}
+	});
+
+}
+
+function explodirConfete(input) {
+	var rect = input.getBoundingClientRect()
+	var quantidade = 35
+	var cores = ["#ff4d6d", "#ffd166", "#06d6a0", "#4dabf7", "#c77dff", "#ffffff"]
+
+	var container = document.createElement("div")
+
+	container.style.position = "fixed"
+	container.style.left = "0"
+	container.style.top = "0"
+	container.style.width = "100%"
+	container.style.height = "100%"
+	container.style.pointerEvents = "none"
+	container.style.zIndex = "9999"
+
+	document.body.appendChild(container)
+
+	var centroX = rect.left + rect.width / 2
+	var centroY = rect.top + rect.height / 2
+
+	for (var i = 0; i < quantidade; i++) {
+		var confete = document.createElement("span")
+
+		var angulo = Math.random() * Math.PI * 2
+		var distancia = 50 + Math.random() * 100
+		var tamanho = 4 + Math.random() * 6
+		var duracao = 500 + Math.random() * 500
+
+		var x = Math.cos(angulo) * distancia
+		var y = Math.sin(angulo) * distancia
+
+		confete.style.position = "fixed"
+		confete.style.left = centroX + "px"
+		confete.style.top = centroY + "px"
+		confete.style.width = tamanho + "px"
+		confete.style.height = tamanho * (0.5 + Math.random()) + "px"
+		confete.style.background = cores[Math.floor(Math.random() * cores.length)]
+		confete.style.borderRadius = Math.random() < 0.5 ? "1px" : "50%"
+		confete.style.transform = "translate(-50%, -50%) rotate(" + Math.random() * 360 + "deg)"
+		confete.style.transition = "transform " + duracao + "ms cubic-bezier(.15,.8,.3,1), opacity " + duracao + "ms ease-out"
+
+		container.appendChild(confete)
+
+		setTimeout(function (confete, x, y) {
+			confete.style.transform = "translate(calc(-50% + " + x + "px), calc(-50% + " + y + "px)) rotate(" + (Math.random() * 720 - 360) + "deg)"
+			confete.style.opacity = "0"
+		}, 20, confete, x, y)
+	}
+
+	setTimeout(function () {
+		container.remove()
+	}, 1200)
 }

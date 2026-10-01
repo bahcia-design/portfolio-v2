@@ -3,14 +3,15 @@ body{
 	padding: 0;
 	width: 100vw;
 	height: 100vh;
-	background: #120023;
+	background: #0c0023;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
 img{
-	width: 650px;
+	width: 300px;
+	cursor: pointer;
 }
 
 .hint{
@@ -19,5 +20,5 @@ img{
 	left: 50%;
 	transform: translateX(-50%);
 	text-align: center;
-	color: #120023;
+	color: #230b00;
 }
