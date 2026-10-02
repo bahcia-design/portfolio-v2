@@ -2,22 +2,36 @@
 // 	openCard()
 // }
 
+window.onload = openCard
+
 let envelope = document.querySelector("#envelope")
 const mainDiv = document.querySelector("main")
+const tutDiv = document.querySelector(".page2")
 const closeEnvelope = document.querySelector(".close-envelope")
+const backToCardBtn = document.querySelector("#swipe-to-msg")
+
 let isOpening = false
 let openedEnvelopeOnce = false
+let startedTicks = false
 
 closeEnvelope.addEventListener("click", (e) => {
-	// e.preventDefault()
-	// e.stopImmediatePropagation()
-
-	// console.log("closing")
-	const isOpened = !mainDiv.classList.contains("hidden")
-	if(isOpened){
-		closeCard()
-	}
+	swipeToTutorial()
 })
+
+backToCardBtn.addEventListener("click", (e) => {
+	swipeToMessage()
+})
+
+function swipeToTutorial() {
+	if (!startedTicks) { iniciarTicks(); startedTicks = true; }
+	mainDiv.classList.add("goto-left")
+	tutDiv.classList.add("goto-center")
+}
+
+function swipeToMessage() {
+	mainDiv.classList.remove("goto-left")
+	tutDiv.classList.remove("goto-center")
+}
 
 envelope.addEventListener("click", (e) => {
 	e.preventDefault()
@@ -25,7 +39,7 @@ envelope.addEventListener("click", (e) => {
 
 	// console.log("opening")
 	const isOpened = !mainDiv.classList.contains("hidden")
-	if(!isOpened && isOpening == false){
+	if (!isOpened && isOpening == false) {
 		openCard()
 	}
 })
@@ -73,9 +87,30 @@ function closeCard() {
 	}, 1000)
 }
 
-function addHintOnTutPage(){
+function addHintOnTutPage() {
 	const dick = document.querySelector(".dick")
 	dick.classList.remove("hidden")
+}
+function iniciarTicks() {
+	var ticks = Array.prototype.slice.call(document.querySelectorAll("span.tick"))
+
+	function piscar(el) {
+		el.classList.add("bolded")
+
+		setTimeout(function () {
+			el.classList.remove("bolded")
+
+			setTimeout(function () {
+				piscar(el)
+			}, 300 + Math.random() * 1200)
+		}, 150)
+	}
+
+	ticks.forEach(function (el) {
+		setTimeout(function () {
+			piscar(el)
+		}, Math.random() * 1500)
+	})
 }
 
 function openCard() {
@@ -140,28 +175,6 @@ function openCard() {
 		return s;
 	}
 
-	function iniciarTicks() {
-		var ticks = Array.prototype.slice.call(document.querySelectorAll("span.tick"))
-
-		function piscar(el) {
-			el.classList.add("bolded")
-
-			setTimeout(function () {
-				el.classList.remove("bolded")
-
-				setTimeout(function () {
-					piscar(el)
-				}, 300 + Math.random() * 1200)
-			}, 150)
-		}
-
-		ticks.forEach(function (el) {
-			setTimeout(function () {
-				piscar(el)
-			}, Math.random() * 1500)
-		})
-	}
-	iniciarTicks()
 
 	var cauda = document.getElementById('cauda'), buraco = document.getElementById('buraco'), quase = document.getElementById('quase');
 	var origC = 'fosse', feito = false;
@@ -215,11 +228,11 @@ function openCard() {
 		}
 		if (v.indexOf('tothemoon') === 0) {
 			// PASSAR PRA PROXIMA FASE AQUI ANSWER CHECK
-			for(let i = 0;i<4;i++){
+			for (let i = 0; i < 4; i++) {
 				explodirConfete(document.querySelector(".buraco"))
 				setTimeout(() => {
 					explodirConfete(document.querySelector(".buraco"))
-				}, 150*i)
+				}, 150 * i)
 			}
 
 			setTimeout(() => {
@@ -275,7 +288,7 @@ function explodirConfete(input, scale = 1) {
 		confete.style.transition = "transform " + duracao + "ms cubic-bezier(.15,.8,.3,1), opacity " + duracao + "ms ease-out"
 
 		container.appendChild(confete)
-		if(scale != 1){
+		if (scale != 1) {
 			container.style.transform = `translateY(160px) scale(${scale})`
 		}
 
@@ -366,7 +379,7 @@ function mostrarTransicao(urlIframe) {
 			window.location.href = "./a.html"
 		}, 1500)
 	})
-	
+
 
 	return secao
 }
