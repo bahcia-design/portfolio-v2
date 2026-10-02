@@ -1,0 +1,120 @@
+body {
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	height: 100vh;
+	background: #0e0e0e;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+img {
+	position: absolute;
+	top: 100px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 650px;
+	border-radius: 12px;
+	/* cursor: pointer; */
+}
+
+.seta-tutorial {
+	position: absolute;
+	width: 77px;
+	height: 140px;
+	transform: rotate(47deg);
+	top: 89px;
+	right: 252px;
+}
+
+.inner-seta {
+	width: 100%;
+	height: 100%;
+	background-color: #ff3333;
+	clip-path: polygon(50% 0%,
+   /* Ponto superior (ponta da seta) */
+   99% 48%,
+   /* Canto direito da cabeça */
+   70% 48%,
+   /* Recorte interno direito */
+   70% 100%,
+   /* Canto inferior direito do corpo */
+   29% 100%,
+   /* Canto inferior esquerdo do corpo */
+   30% 48%,
+   /* Recorte interno esquerdo */
+   0% 48%
+   /* Canto esquerdo da cabeça */
+  )
+}
+
+.answer {
+	position: absolute;
+	top: 23px;
+	right: 23px;
+	padding: 8px;
+	border: none;
+	outline: none;
+	background-color: #f7f7f70c;
+	color: #ccc;
+	font-size: 14px;
+	border: solid 1px #cccccc52;
+}
+
+.hitbox {
+	position: absolute;
+	/* background: red; */
+	top: 176px;
+	left: calc(50% + -35px);
+	width: 120px;
+	height: 280px;
+	cursor: pointer;
+}
+
+.hint {
+	position: absolute;
+	bottom: 12%;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+	color: #0e0e0e;
+}
+
+
+
+.fase-concluida {
+  font-family: 'IBM Plex Mono', monospace;
+  color: #ccc;
+  text-align: center;
+}
+
+.fase-concluida h2 {
+  font-size: 42px;
+}
+
+.fase-concluida p {
+  font-size: 16px;
+}
+
+.adv-btn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  cursor: pointer;
+  background: #4a0bc2;
+  color: #cfcfcf;
+  transition: .2s;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  font-size: 21px;
+}
+
+.adv-btn:hover {
+  transform: scale(1.12);
+}
+
+
+.fase-concluida a {
+  color: #3a9aff;
+}

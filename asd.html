@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>pabens!</title>
+	<link rel="stylesheet" href="styles/asd.css">
+</head>
+<body>
+	<video id="video" src="imgs/eba.mp4" autoplay loop></video>
+
+	<script>
+		window.onload = () => {
+			setInterval(() => {
+				if(video.paused){
+					video.play()
+				}
+			}, 100)
+		}
+	</script>
+</body>
+</html>

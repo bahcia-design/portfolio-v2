@@ -237,10 +237,10 @@ function openCard() {
 
 			setTimeout(() => {
 				mostrarTransicao()
-				history.pushState({}, "", "/portfolio-v2/a.html")
+				history.pushState({}, "", "the.html")
 			}, 1200)
 
-			// window.location.href = "./a.html"
+			// window.location.href = "./the.html"
 		}
 	});
 
@@ -333,7 +333,7 @@ function mostrarTransicao(urlIframe) {
 	secao.style.justifyContent = "center"
 	secao.innerHTML = `
 	<div class="fase-concluida"> 
-		<h2 class="fdsdesc">Boa passou a primeira <span class="joia">👍</span></h2>
+		<h2 class="fdsdesc">Boa <span class="joia">👍</span></h2>
 		<p > pra ajudar a resolver a próxima fase agora você vai ter que jogar <a href="https://store.steampowered.com/app/206440/To_the_Moon/" target="_blank" rel="noopener noreferrer">To the Moon</a> </p> 
 	</div>`
 
@@ -343,7 +343,7 @@ function mostrarTransicao(urlIframe) {
 	overlay.appendChild(secao)
 	overlay.appendChild(botao)
 
-	iframe.src = "./a.html"
+	iframe.src = "./the.html"
 	iframe.style.position = "fixed"
 	iframe.style.left = "0"
 	iframe.style.top = "0"
@@ -376,7 +376,7 @@ function mostrarTransicao(urlIframe) {
 		iframe.style.transform = "translateY(0)"
 
 		setTimeout(() => {
-			window.location.href = "./a.html"
+			window.location.href = "./the.html"
 		}, 1500)
 	})
 
