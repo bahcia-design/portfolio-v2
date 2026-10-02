@@ -14,10 +14,10 @@ addEventListener("keydown", evt => {
 			alert("O que está dentro de algo que ela fez pode te ajudar")
 		}
 		if (res == "road") {
-			alert("Road..")
+			alert("No finalziiiinho tem um negocinho..")
 		}
 		if (res == "96") {
-			alert("..96")
+			alert("No comecinho tem um negocinho")
 		}
 	}
 })

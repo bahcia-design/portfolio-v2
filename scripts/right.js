@@ -21,8 +21,9 @@ addEventListener("keydown", evt => {
 
 function transition() {
 	var iframe = document.createElement("iframe")
+	let link = "./felizaniversariameuamorqueeuteamomuitoesperoquetenhasempreumavidalindacheiadefelicidadeesorrisosqueseussonhossetornemrealidadeequepossamosviverjuntosmuitosmomentosespeciais.html"
 
-	iframe.src = "./asd.html"
+	iframe.src = link
 	iframe.style.position = "fixed"
 	iframe.style.left = "0"
 	iframe.style.top = "0"
@@ -41,7 +42,7 @@ function transition() {
 		iframe.style.transform = "translateY(0)"
 
 		setTimeout(() => {
-			window.location.href = "./asd.html"
+			window.location.href = link
 		}, 1500)
 	})
 
